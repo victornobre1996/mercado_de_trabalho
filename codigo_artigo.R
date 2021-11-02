@@ -91,6 +91,8 @@ dados <- pnad_rendimento_agregado %>%
     setor == "Educação, saúde humana e serviços sociais" ~ "Administração pública, defesa e seguridade social",
     TRUE ~ setor)) 
 
+
+
 # exportando a base no R 
 write.csv(pnad_escolaridade_agregada, file = "Pnad_escolaridade_agregado.csv")
 
