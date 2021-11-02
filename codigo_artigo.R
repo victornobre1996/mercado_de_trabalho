@@ -1,6 +1,7 @@
 rm(list = ls())
 
-# --- Este script serve para manipular as bases do IBGE
+### Este script serve para manipular as bases do IBGE
+
 # carregando pacotes
 
 library(PNADcIBGE)
@@ -56,7 +57,7 @@ pnad_rendimento_agregado <- rbind(pnad_rendimento_medio_2019,
 
 pnad_rendimento_agregado <- pnad_rendimento_agregado[,-1]
 
-# transformando rowname para variavel
+#---- transformando rowname para variavel ----
 
 pnad_rendimento_agregado %>% 
   rownames_to_column(var = "model") -> pnad_rendimento_agregado 
@@ -65,34 +66,18 @@ pnad_rendimento_agregado %>%
 
 pnad_rendimento_agregado <- pnad_rendimento_agregado %>% separate(model, c("instrucao", "setor"), sep = "\\.")
 
-
 # organizar dataframe
 
 pnad_rendimento_agregado <- pnad_rendimento_agregado %>% select(trimestre,instrucao, setor, VD4019)
-
 
 pnad_rendimento_agregado <- pnad_rendimento_agregado %>% rename(rendimento_medio_nominal = VD4019)
 
 pnad_rendimento_agregado$rendimento_medio_nominal <- round(pnad_rendimento_agregado$rendimento_medio_nominal, digits = 2)
 
-
-View(pnad_rendimento_agregado)
-
-pnad_rendimento_agregado$setor <- str_sub(pnad_rendimento_agregado$setor, 1, nchar(pnad_rendimento_agregado$setor)-1) 
-
-pnad_rendimento_agregado %>% 
-  if (trimestre =! "4T/2019") {  
-    str_sub(pnad_rendimento_agregado$setor, 1, str_length(pnad_rendimento_agregado$setor)-1)
-  }
+###
+# pnad_rendimento_agregado$setor <- str_sub(pnad_rendimento_agregado$setor, 1, nchar(pnad_rendimento_agregado$setor)-1) 
 
 
-dados <- pnad_rendimento_agregado %>% 
-  mutate(setor = case_when(
-    setor == "Educação, saúde humana e serviços sociais" ~ "Administração pública, defesa e seguridade social",
-    TRUE ~ setor)) 
-
-
-
-# exportando a base no R 
+# ---- exportando a base no R ---- 
 write.csv(pnad_escolaridade_agregada, file = "Pnad_escolaridade_agregado.csv")
 
