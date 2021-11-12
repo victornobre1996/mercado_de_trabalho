@@ -47,8 +47,6 @@ pnad_rendimento_medio_2021_1 <- pnad_rendimento_medio_2021_1 %>% mutate(trimestr
 pnad_rendimento_medio_2021_2 <- pnad_rendimento_medio_2021_2 %>% mutate(trimestre = "2T/2021")
 
 # agregando as bases de rendimento medio
-l = list()
-
 
 pnad_rendimento_agregado <- rbindlist(list(pnad_rendimento_medio_2019,
                                            pnad_rendimento_medio_2020_1,
