@@ -15,7 +15,7 @@ library(data.table)
 
 # baixando as bases
 
-var_select <- c("VD4019", "VD3004", "V4010")
+var_select <- c("VD4019", "VD3004", "VD4010")
 
 pnad_2019 <- get_pnadc(year = 2019, quarter = 4, vars = var_select)
 pnad_2020_1 <- get_pnadc(year = 2020, quarter = 1, vars = var_select)
