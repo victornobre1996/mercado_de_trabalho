@@ -11,16 +11,19 @@ library(survey)
 library(deflateBR)
 library(sidrar)
 library(stringr)
+library(data.table)
 
 # baixando as bases
 
-pnad_2019 <- get_pnadc(year = 2019, quarter = 4)
-pnad_2020_1 <- get_pnadc(year = 2020, quarter = 1)
-pnad_2020_2 <- get_pnadc(year = 2020, quarter = 2)
-pnad_2020_3 <- get_pnadc(year = 2020, quarter = 3)
-pnad_2020_4 <- get_pnadc(year = 2020, quarter = 4)
-pnad_2021_1 <- get_pnadc(year = 2021, quarter = 1)
-pnad_2021_2 <- get_pnadc(year = 2021, quarter = 2)
+var_select <- c("VD4019", "VD3004", "V2010")
+
+pnad_2019 <- get_pnadc(year = 2019, quarter = 4, vars = var_select)
+pnad_2020_1 <- get_pnadc(year = 2020, quarter = 1, vars = var_select)
+pnad_2020_2 <- get_pnadc(year = 2020, quarter = 2, vars = var_select)
+pnad_2020_3 <- get_pnadc(year = 2020, quarter = 3, vars = var_select)
+pnad_2020_4 <- get_pnadc(year = 2020, quarter = 4, vars = var_select)
+pnad_2021_1 <- get_pnadc(year = 2021, quarter = 1, vars = var_select)
+pnad_2021_2 <- get_pnadc(year = 2021, quarter = 2, vars = var_select)
 
 # RENDIMENTO MEDIO POR SETOR E NIVEL DE INSTRUCAO
 
@@ -44,15 +47,16 @@ pnad_rendimento_medio_2021_1 <- pnad_rendimento_medio_2021_1 %>% mutate(trimestr
 pnad_rendimento_medio_2021_2 <- pnad_rendimento_medio_2021_2 %>% mutate(trimestre = "2T/2021")
 
 # agregando as bases de rendimento medio
+l = list()
 
-pnad_rendimento_agregado <- rbind(pnad_rendimento_medio_2019,
-                                  pnad_rendimento_medio_2020_1,
-                                  pnad_rendimento_medio_2020_2,
-                                  pnad_rendimento_medio_2020_3,
-                                  pnad_rendimento_medio_2020_4,
-                                  pnad_rendimento_medio_2021_1,
-                                  pnad_rendimento_medio_2021_2)
 
+pnad_rendimento_agregado <- rbindlist(list(pnad_rendimento_medio_2019,
+                                           pnad_rendimento_medio_2020_1,
+                                           pnad_rendimento_medio_2020_2,
+                                           pnad_rendimento_medio_2020_3,
+                                           pnad_rendimento_medio_2020_4,
+                                           pnad_rendimento_medio_2021_1,
+                                           pnad_rendimento_medio_2021_2))
 
 
 pnad_rendimento_agregado <- pnad_rendimento_agregado[,-1]
