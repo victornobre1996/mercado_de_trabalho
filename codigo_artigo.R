@@ -57,16 +57,15 @@ pnad_rendimento_agregado <- rbindlist(list(pnad_rendimento_medio_2019,
                                            pnad_rendimento_medio_2021_2))
 
 
-pnad_rendimento_agregado <- pnad_rendimento_agregado[,-1]
+pnad_rendimento_agregado <- pnad_rendimento_agregado[,-"se"]
 
-#---- transformando rowname para variavel ----
+#---- transformando rowname para variavel e separando ----
 
-pnad_rendimento_agregado %>% 
-  rownames_to_column(var = "model") -> pnad_rendimento_agregado 
-
-# separando a variavel model
-
-pnad_rendimento_agregado <- pnad_rendimento_agregado %>% separate(model, c("instrucao", "setor"), sep = "\\.")
+pnad_rendimento_agregado <- pnad_rendimento_agregado %>% 
+  separate( 
+    col = "interaction(VD3004, VD4010)", 
+    into = c("instrucao", "setor"),
+    sep = "\\.")
 
 # organizar dataframe
 
@@ -76,8 +75,20 @@ pnad_rendimento_agregado <- pnad_rendimento_agregado %>% rename(rendimento_medio
 
 pnad_rendimento_agregado$rendimento_medio_nominal <- round(pnad_rendimento_agregado$rendimento_medio_nominal, digits = 2)
 
-###
-# pnad_rendimento_agregado$setor <- str_sub(pnad_rendimento_agregado$setor, 1, nchar(pnad_rendimento_agregado$setor)-1) 
+#parte da agregação 
+##exemplo
+
+dados <- pnad_rendimento_agregado %>% 
+  mutate(setor = case_when(setor == "Educação, saúde humana e serviços sociais" ~ 
+                             "Administração pública, defesa e seguridade social ",
+                           setor == "Serviços domésticos" ~ "Outros Serviços",
+                           setor == "Construção" ~ "Outros Serviços",
+                           TRUE ~ setor))
+
+
+dados_1 <- dados %>% 
+  group_by(trimestre, instrucao,setor) %>%
+  summarise(rendimento_medio_nominal = sum(rendimento_medio_nominal))
 
 
 # ---- exportando a base no R ---- 
