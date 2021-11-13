@@ -1,5 +1,7 @@
 rm(list = ls())
 
+## Scrit formulado por Victor Nobre, Ledson Gomes e Igor Soares
+
 ### Este script serve para manipular as bases do IBGE
 
 # carregando pacotes
@@ -8,9 +10,7 @@ library(PNADcIBGE)
 library(tidyverse)
 library(descr)
 library(survey)
-library(deflateBR)
 library(sidrar)
-library(stringr)
 library(data.table)
 
 # baixando as bases
@@ -35,8 +35,7 @@ pnad_rendimento_medio_2020_4 <- svyby(formula =~VD4019, by = ~interaction(VD3004
 pnad_rendimento_medio_2021_1 <- svyby(formula =~VD4019, by = ~interaction(VD3004,VD4010), design = pnad_2021_1, FUN = svymean, na.rm = TRUE )
 pnad_rendimento_medio_2021_2 <- svyby(formula =~VD4019, by = ~interaction(VD3004,VD4010), design = pnad_2021_2, FUN = svymean, na.rm = TRUE )
 
-
-# tratando a base 
+# adicionar os trimestres
 
 pnad_rendimento_medio_2019 <- pnad_rendimento_medio_2019 %>% mutate(trimestre = "4T/2019")
 pnad_rendimento_medio_2020_1 <- pnad_rendimento_medio_2020_1 %>% mutate(trimestre = "1T/2020")
@@ -45,6 +44,10 @@ pnad_rendimento_medio_2020_3 <- pnad_rendimento_medio_2020_3 %>% mutate(trimestr
 pnad_rendimento_medio_2020_4 <- pnad_rendimento_medio_2020_4 %>% mutate(trimestre = "4T/2020")
 pnad_rendimento_medio_2021_1 <- pnad_rendimento_medio_2021_1 %>% mutate(trimestre = "1T/2021")
 pnad_rendimento_medio_2021_2 <- pnad_rendimento_medio_2021_2 %>% mutate(trimestre = "2T/2021")
+
+
+
+
 
 # agregando as bases de rendimento medio
 
@@ -57,7 +60,9 @@ pnad_rendimento_agregado <- rbindlist(list(pnad_rendimento_medio_2019,
                                            pnad_rendimento_medio_2021_2))
 
 
+
 pnad_rendimento_agregado <- pnad_rendimento_agregado[,-"se"]
+
 
 #---- transformando rowname para variavel e separando ----
 
@@ -75,22 +80,16 @@ pnad_rendimento_agregado <- pnad_rendimento_agregado %>% rename(rendimento_medio
 
 pnad_rendimento_agregado$rendimento_medio_nominal <- round(pnad_rendimento_agregado$rendimento_medio_nominal, digits = 2)
 
-#parte da agregação 
-##exemplo
+## agregando os dados 
 
-dados <- pnad_rendimento_agregado %>% 
+pnad_rendimento_agregado <- pnad_rendimento_agregado %>% 
   mutate(setor = case_when(setor == "Educação, saúde humana e serviços sociais" ~ 
                              "Administração pública, defesa e seguridade social ",
-                           setor == "Serviços domésticos" ~ "Outros Serviços",
-                           setor == "Construção" ~ "Outros Serviços",
                            TRUE ~ setor))
 
 
-dados_1 <- dados %>% 
-  group_by(trimestre, instrucao,setor) %>%
-  summarise(rendimento_medio_nominal = sum(rendimento_medio_nominal))
 
 
 # ---- exportando a base no R ---- 
-write.csv(pnad_escolaridade_agregada, file = "Pnad_escolaridade_agregado.csv")
+write.csv(pnad_rendimento_agregado, file = "Pnad_rendimento_agregado.csv")
 
