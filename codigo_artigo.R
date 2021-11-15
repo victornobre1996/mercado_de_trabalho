@@ -25,6 +25,25 @@ pnad_2020_4 <- get_pnadc(year = 2020, quarter = 4, vars = var_select)
 pnad_2021_1 <- get_pnadc(year = 2021, quarter = 1, vars = var_select)
 pnad_2021_2 <- get_pnadc(year = 2021, quarter = 2, vars = var_select)
 
+
+# Combinando categorias - 
+
+#a <- pnad_2019
+#e <-a$variables$VD4010[21] # "Administração pública, defesa e seguridade social "
+#f <-a$variables$VD4010[30] # "Outros Serviços"
+#aea <-a$variables$VD4010[10] # "Alojamento e alimentação"
+#rm(a)
+#pnadc_list = list(a)
+
+
+#for (i in seq_along(pnadc_list)) {
+  
+#  pnadc_list[[i]]$variables$VD4010[i$variables$VD4010 == "Educação, saúde humana e serviços sociais"] <- as.factor(e)
+#  pnadc_list[[i]]$variables$VD4010[i$variables$VD4010 == "Serviços domésticos"] <- as.factor(f)
+#  pnadc_list[[i]]$variables$VD4010[i$variables$VD4010 == aea] <- as.factor(f)
+  
+#}
+
 # RENDIMENTO MEDIO POR SETOR E NIVEL DE INSTRUCAO
 
 pnad_rendimento_medio_2019 <- svyby(formula =~VD4019, by = ~interaction(VD3004,VD4010), design = pnad_2019, FUN = svymean, na.rm = TRUE )
