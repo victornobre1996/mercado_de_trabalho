@@ -28,21 +28,40 @@ pnad_2021_2 <- get_pnadc(year = 2021, quarter = 2, vars = var_select)
 
 # Combinando categorias - 
 
-#a <- pnad_2019
-#e <-a$variables$VD4010[21] # "Administração pública, defesa e seguridade social "
-#f <-a$variables$VD4010[30] # "Outros Serviços"
-#aea <-a$variables$VD4010[10] # "Alojamento e alimentação"
-#rm(a)
-#pnadc_list = list(a)
+a <- pnad_2019
+e <-a$variables$VD4010[21] # "Administração pública, defesa e seguridade social "
+f <-a$variables$VD4010[30] # "Outros Serviços"
+aea <-a$variables$VD4010[10] # "Alojamento e alimentação"
+rm(a)
 
+pnad_2019$variables$VD4010[pnad_2019$variables$VD4010 == "Educação, saúde humana e serviços sociais"] <- as.factor(e)
+pnad_2019$variables$VD4010[pnad_2019$variables$VD4010 == "Serviços domésticos"] <- as.factor(f)
+pnad_2019$variables$VD4010[pnad_2019$variables$VD4010 == aea] <- as.factor(f) 
 
-#for (i in seq_along(pnadc_list)) {
-  
-#  pnadc_list[[i]]$variables$VD4010[i$variables$VD4010 == "Educação, saúde humana e serviços sociais"] <- as.factor(e)
-#  pnadc_list[[i]]$variables$VD4010[i$variables$VD4010 == "Serviços domésticos"] <- as.factor(f)
-#  pnadc_list[[i]]$variables$VD4010[i$variables$VD4010 == aea] <- as.factor(f)
-  
-#}
+pnad_2020_1$variables$VD4010[pnad_2020_1$variables$VD4010 == "Educação, saúde humana e serviços sociais"] <- as.factor(e)
+pnad_2020_1$variables$VD4010[pnad_2020_1$variables$VD4010 == "Serviços domésticos"] <- as.factor(f)
+pnad_2020_1$variables$VD4010[pnad_2020_1$variables$VD4010 == aea] <- as.factor(f) 
+
+pnad_2020_2$variables$VD4010[pnad_2020_2$variables$VD4010 == "Educação, saúde humana e serviços sociais"] <- as.factor(e)
+pnad_2020_2$variables$VD4010[pnad_2020_2$variables$VD4010 == "Serviços domésticos"] <- as.factor(f)
+pnad_2020_2$variables$VD4010[pnad_2020_2$variables$VD4010 == aea] <- as.factor(f) 
+
+pnad_2020_3$variables$VD4010[pnad_2020_3$variables$VD4010 == "Educação, saúde humana e serviços sociais"] <- as.factor(e)
+pnad_2020_3$variables$VD4010[pnad_2020_3$variables$VD4010 == "Serviços domésticos"] <- as.factor(f)
+pnad_2020_3$variables$VD4010[pnad_2020_3$variables$VD4010 == aea] <- as.factor(f) 
+
+pnad_2020_4$variables$VD4010[pnad_2020_4$variables$VD4010 == "Educação, saúde humana e serviços sociais"] <- as.factor(e)
+pnad_2020_4$variables$VD4010[pnad_2020_4$variables$VD4010 == "Serviços domésticos"] <- as.factor(f)
+pnad_2020_4$variables$VD4010[pnad_2020_4$variables$VD4010 == aea] <- as.factor(f)
+
+pnad_2021_1$variables$VD4010[pnad_2021_1$variables$VD4010 == "Educação, saúde humana e serviços sociais"] <- as.factor(e)
+pnad_2021_1$variables$VD4010[pnad_2021_1$variables$VD4010 == "Serviços domésticos"] <- as.factor(f)
+pnad_2021_1$variables$VD4010[pnad_2021_1$variables$VD4010 == aea] <- as.factor(f) 
+
+pnad_2021_2$variables$VD4010[pnad_2021_2$variables$VD4010 == "Educação, saúde humana e serviços sociais"] <- as.factor(e)
+pnad_2021_2$variables$VD4010[pnad_2021_2$variables$VD4010 == "Serviços domésticos"] <- as.factor(f)
+pnad_2021_2$variables$VD4010[pnad_2021_2$variables$VD4010 == aea] <- as.factor(f) 
+
 
 # RENDIMENTO MEDIO POR SETOR E NIVEL DE INSTRUCAO
 
@@ -63,10 +82,6 @@ pnad_rendimento_medio_2020_3 <- pnad_rendimento_medio_2020_3 %>% mutate(trimestr
 pnad_rendimento_medio_2020_4 <- pnad_rendimento_medio_2020_4 %>% mutate(trimestre = "4T/2020")
 pnad_rendimento_medio_2021_1 <- pnad_rendimento_medio_2021_1 %>% mutate(trimestre = "1T/2021")
 pnad_rendimento_medio_2021_2 <- pnad_rendimento_medio_2021_2 %>% mutate(trimestre = "2T/2021")
-
-
-
-
 
 # agregando as bases de rendimento medio
 
