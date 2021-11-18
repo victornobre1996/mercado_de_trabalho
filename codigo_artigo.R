@@ -8,9 +8,9 @@ rm(list = ls())
 
 library(PNADcIBGE)
 library(tidyverse)
-library(descr)
+#library(descr)
 library(survey)
-library(sidrar)
+#library(sidrar)
 library(data.table)
 
 # baixando as bases
@@ -74,13 +74,13 @@ pnad_rendimento_medio_setor_2021_2 <- svyby(formula =~VD4019, by = VD4010, desig
 
 # adicionar os trimestres
 
-pnad_rendimento_medio_setor_2019 <- pnad_rendimento_medio_setor_2019 %>% mutate(trimestre = "4T/2019")
-pnad_rendimento_medio_setor_2020_1 <- pnad_rendimento_medio_setor_2020_1 %>% mutate(trimestre = "1T/2020")
-pnad_rendimento_medio_setor_2020_2 <- pnad_rendimento_medio_setor_2020_2 %>% mutate(trimestre = "2T/2020")
-pnad_rendimento_medio_setor_2020_3 <- pnad_rendimento_medio_setor_2020_3 %>% mutate(trimestre = "3T/2020")
-pnad_rendimento_medio_setor_2020_4 <- pnad_rendimento_medio_setor_2020_4 %>% mutate(trimestre = "4T/2020")
-pnad_rendimento_medio_setor_2021_1 <- pnad_rendimento_medio_setor_2021_1 %>% mutate(trimestre = "1T/2021")
-pnad_rendimento_medio_setor_2021_2 <- pnad_rendimento_medio_setor_2021_2 %>% mutate(trimestre = "2T/2021")
+pnad_rendimento_medio_setor_2019 <- pnad_rendimento_medio_setor_2019 %>% mutate(trimestre = "2019/4T")
+pnad_rendimento_medio_setor_2020_1 <- pnad_rendimento_medio_setor_2020_1 %>% mutate(trimestre = "2020/1T")
+pnad_rendimento_medio_setor_2020_2 <- pnad_rendimento_medio_setor_2020_2 %>% mutate(trimestre = "2020/2T")
+pnad_rendimento_medio_setor_2020_3 <- pnad_rendimento_medio_setor_2020_3 %>% mutate(trimestre = "2020/3T")
+pnad_rendimento_medio_setor_2020_4 <- pnad_rendimento_medio_setor_2020_4 %>% mutate(trimestre = "2020/4T")
+pnad_rendimento_medio_setor_2021_1 <- pnad_rendimento_medio_setor_2021_1 %>% mutate(trimestre = "2021/1T")
+pnad_rendimento_medio_setor_2021_2 <- pnad_rendimento_medio_setor_2021_2 %>% mutate(trimestre = "2021/2T")
 
 # agregando as bases de rendimento medio
 
@@ -139,13 +139,13 @@ pnad_rendimento_medio_2021_2 <- svyby(formula =~VD4019, by = ~interaction(VD3004
 
 # adicionar os trimestres
 
-pnad_rendimento_medio_2019 <- pnad_rendimento_medio_2019 %>% mutate(trimestre = "4T/2019")
-pnad_rendimento_medio_2020_1 <- pnad_rendimento_medio_2020_1 %>% mutate(trimestre = "1T/2020")
-pnad_rendimento_medio_2020_2 <- pnad_rendimento_medio_2020_2 %>% mutate(trimestre = "2T/2020")
-pnad_rendimento_medio_2020_3 <- pnad_rendimento_medio_2020_3 %>% mutate(trimestre = "3T/2020")
-pnad_rendimento_medio_2020_4 <- pnad_rendimento_medio_2020_4 %>% mutate(trimestre = "4T/2020")
-pnad_rendimento_medio_2021_1 <- pnad_rendimento_medio_2021_1 %>% mutate(trimestre = "1T/2021")
-pnad_rendimento_medio_2021_2 <- pnad_rendimento_medio_2021_2 %>% mutate(trimestre = "2T/2021")
+pnad_rendimento_medio_2019 <- pnad_rendimento_medio_2019 %>% mutate(trimestre = "2019/4T")
+pnad_rendimento_medio_2020_1 <- pnad_rendimento_medio_2020_1 %>% mutate(trimestre = "2020/1T")
+pnad_rendimento_medio_2020_2 <- pnad_rendimento_medio_2020_2 %>% mutate(trimestre = "2020/2T")
+pnad_rendimento_medio_2020_3 <- pnad_rendimento_medio_2020_3 %>% mutate(trimestre = "2020/3T")
+pnad_rendimento_medio_2020_4 <- pnad_rendimento_medio_2020_4 %>% mutate(trimestre = "2020/4T")
+pnad_rendimento_medio_2021_1 <- pnad_rendimento_medio_2021_1 %>% mutate(trimestre = "2021/1T")
+pnad_rendimento_medio_2021_2 <- pnad_rendimento_medio_2021_2 %>% mutate(trimestre = "2021/2T")
 
 # agregando as bases de rendimento medio
 
