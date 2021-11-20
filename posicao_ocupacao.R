@@ -16,7 +16,7 @@ library(data.table)
 
 # baixando as bases
 
-var_select <- c("VD4019", "VD3004", "VD4010", "VD4009", "VD4012")
+var_select <- c("VD4002", "V2009", "VD4019", "VD3004", "VD4010", "VD4009", "VD4012")
 
 pnad_2019 <- get_pnadc(year = 2019, quarter = 4, vars = var_select)
 pnad_2020_1 <- get_pnadc(year = 2020, quarter = 1, vars = var_select)
@@ -48,6 +48,7 @@ for (h in seq_along(mylist_1)) {
                   drop = T)))) %>% 
       mutate(trimestre = mylist_1[[h]])
     
+    
     b <- b %>% mutate(row.names(b))
     
     b<-(b[c("Conta-própria.Contribuinte",
@@ -68,6 +69,43 @@ pnad_ocupacao_agregado <-rbindlist(list(pnad_ocupacao_1,
                                         pnad_ocupacao_5,
                                         pnad_ocupacao_6,
                                         pnad_ocupacao_7), use.names=FALSE)
+
+# para os setores e posicoes de ocupacao 
+
+pnad_2019_setor_ocupacao <- svyby(formula =~as.integer(VD4002 == "Pessoas ocupadas"),
+                        by = ~interaction(VD4009,VD4010), design = pnad_2019, FUN=svytotal, keep.names=FALSE, na.rm=TRUE)
+
+pnad_2020_1_setor_ocupacao <- svyby(formula =~as.integer(VD4002 == "Pessoas ocupadas"),
+                                  by = ~interaction(VD4009,VD4010), design = pnad_2020_1, FUN=svytotal, keep.names=FALSE, na.rm=TRUE)
+
+pnad_2020_2_setor_ocupacao <- svyby(formula =~as.integer(VD4002 == "Pessoas ocupadas"),
+                                    by = ~interaction(VD4009,VD4010), design = subset(pnad_2020_2,V2009 >=14), FUN=svytotal, keep.names=FALSE, na.rm=TRUE)
+
+
+pnad_2020_3_setor_ocupacao <- svyby(formula =~as.integer(VD4002 == "Pessoas ocupadas"),
+                                    by = ~interaction(VD4009,VD4010), design = subset(pnad_2020_3,V2009 >=14), FUN=svytotal, keep.names=FALSE, na.rm=TRUE)
+
+
+pnad_2020_4_setor_ocupacao <- svyby(formula =~as.integer(VD4002 == "Pessoas ocupadas"),
+                                    by = ~interaction(VD4009,VD4010), design = subset(pnad_2020_4,V2009 >=14), FUN=svytotal, keep.names=FALSE, na.rm=TRUE)
+
+
+pnad_2021_1_setor_ocupacao <- svyby(formula =~as.integer(VD4002 == "Pessoas ocupadas"),
+                                    by = ~interaction(VD4009,VD4010), design = subset(pnad_2021_1,V2009 >=14), FUN=svytotal, keep.names=FALSE, na.rm=TRUE)
+
+pnad_2021_2_setor_ocupacao <- svyby(formula =~as.integer(VD4002 == "Pessoas ocupadas"),
+                                    by = ~interaction(VD4009,VD4010), design = subset(pnad_2021_2,V2009 >=14), FUN=svytotal, keep.names=FALSE, na.rm=TRUE)
+
+
+
+pnad_setor_ocupacao_setor <- rbindlist(list(pnad_rendimento_medio_setor_2019,
+                                                 pnad_rendimento_medio_setor_2020_1,
+                                                 pnad_rendimento_medio_setor_2020_2,
+                                                 pnad_rendimento_medio_setor_2020_3,
+                                                 pnad_rendimento_medio_setor_2020_4,
+                                                 pnad_rendimento_medio_setor_2021_1,
+                                                 pnad_rendimento_medio_setor_2021_2))
+
 
 
 
