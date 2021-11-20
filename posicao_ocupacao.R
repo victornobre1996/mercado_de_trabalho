@@ -72,11 +72,51 @@ pnad_ocupacao_agregado <-rbindlist(list(pnad_ocupacao_1,
 
 # para os setores e posicoes de ocupacao 
 
+a <- pnad_2019
+e <-a$variables$VD4010[21] # "Administração pública, defesa e seguridade social "
+f <-a$variables$VD4010[30] # "Outros Serviços"
+aea <-a$variables$VD4010[10] # "Alojamento e alimentação"
+
+
+pnad_2019$variables$VD4010[pnad_2019$variables$VD4010 == "Educação, saúde humana e serviços sociais"] <- as.factor(e)
+pnad_2019$variables$VD4010[pnad_2019$variables$VD4010 == "Serviços domésticos"] <- as.factor(f)
+pnad_2019$variables$VD4010[pnad_2019$variables$VD4010 == aea] <- as.factor(f) 
+
+pnad_2020_1$variables$VD4010[pnad_2020_1$variables$VD4010 == "Educação, saúde humana e serviços sociais"] <- as.factor(e)
+pnad_2020_1$variables$VD4010[pnad_2020_1$variables$VD4010 == "Serviços domésticos"] <- as.factor(f)
+pnad_2020_1$variables$VD4010[pnad_2020_1$variables$VD4010 == aea] <- as.factor(f) 
+
+pnad_2020_2$variables$VD4010[pnad_2020_2$variables$VD4010 == "Educação, saúde humana e serviços sociais"] <- as.factor(e)
+pnad_2020_2$variables$VD4010[pnad_2020_2$variables$VD4010 == "Serviços domésticos"] <- as.factor(f)
+pnad_2020_2$variables$VD4010[pnad_2020_2$variables$VD4010 == aea] <- as.factor(f) 
+
+pnad_2020_3$variables$VD4010[pnad_2020_3$variables$VD4010 == "Educação, saúde humana e serviços sociais"] <- as.factor(e)
+pnad_2020_3$variables$VD4010[pnad_2020_3$variables$VD4010 == "Serviços domésticos"] <- as.factor(f)
+pnad_2020_3$variables$VD4010[pnad_2020_3$variables$VD4010 == aea] <- as.factor(f) 
+
+pnad_2020_4$variables$VD4010[pnad_2020_4$variables$VD4010 == "Educação, saúde humana e serviços sociais"] <- as.factor(e)
+pnad_2020_4$variables$VD4010[pnad_2020_4$variables$VD4010 == "Serviços domésticos"] <- as.factor(f)
+pnad_2020_4$variables$VD4010[pnad_2020_4$variables$VD4010 == aea] <- as.factor(f)
+
+pnad_2021_1$variables$VD4010[pnad_2021_1$variables$VD4010 == "Educação, saúde humana e serviços sociais"] <- as.factor(e)
+pnad_2021_1$variables$VD4010[pnad_2021_1$variables$VD4010 == "Serviços domésticos"] <- as.factor(f)
+pnad_2021_1$variables$VD4010[pnad_2021_1$variables$VD4010 == aea] <- as.factor(f) 
+
+pnad_2021_2$variables$VD4010[pnad_2021_2$variables$VD4010 == "Educação, saúde humana e serviços sociais"] <- as.factor(e)
+pnad_2021_2$variables$VD4010[pnad_2021_2$variables$VD4010 == "Serviços domésticos"] <- as.factor(f)
+pnad_2021_2$variables$VD4010[pnad_2021_2$variables$VD4010 == aea] <- as.factor(f) 
+rm(a,e,f,aea,var_select)
+
+
+
+# numero de ocupados por setor e posicao na ocupacao 
+
+
 pnad_2019_setor_ocupacao <- svyby(formula =~as.integer(VD4002 == "Pessoas ocupadas"),
-                        by = ~interaction(VD4009,VD4010), design = pnad_2019, FUN=svytotal, keep.names=FALSE, na.rm=TRUE)
+                        by = ~interaction(VD4009,VD4010), design = subset(pnad_2019,V2009 >=14), FUN=svytotal, keep.names=FALSE, na.rm=TRUE)
 
 pnad_2020_1_setor_ocupacao <- svyby(formula =~as.integer(VD4002 == "Pessoas ocupadas"),
-                                  by = ~interaction(VD4009,VD4010), design = pnad_2020_1, FUN=svytotal, keep.names=FALSE, na.rm=TRUE)
+                                  by = ~interaction(VD4009,VD4010), design = subset(pnad_2020_1,V2009 >=14), FUN=svytotal, keep.names=FALSE, na.rm=TRUE)
 
 pnad_2020_2_setor_ocupacao <- svyby(formula =~as.integer(VD4002 == "Pessoas ocupadas"),
                                     by = ~interaction(VD4009,VD4010), design = subset(pnad_2020_2,V2009 >=14), FUN=svytotal, keep.names=FALSE, na.rm=TRUE)
@@ -97,14 +137,54 @@ pnad_2021_2_setor_ocupacao <- svyby(formula =~as.integer(VD4002 == "Pessoas ocup
                                     by = ~interaction(VD4009,VD4010), design = subset(pnad_2021_2,V2009 >=14), FUN=svytotal, keep.names=FALSE, na.rm=TRUE)
 
 
+# agregando os diferentes trimestres por ocupacao
 
-pnad_setor_ocupacao_setor <- rbindlist(list(pnad_rendimento_medio_setor_2019,
-                                                 pnad_rendimento_medio_setor_2020_1,
-                                                 pnad_rendimento_medio_setor_2020_2,
-                                                 pnad_rendimento_medio_setor_2020_3,
-                                                 pnad_rendimento_medio_setor_2020_4,
-                                                 pnad_rendimento_medio_setor_2021_1,
-                                                 pnad_rendimento_medio_setor_2021_2))
+
+pnad_2019_setor_ocupacao <- pnad_2019_setor_ocupacao %>% mutate(trimestre = "2019/4T")
+pnad_2020_1_setor_ocupacao <- pnad_2020_1_setor_ocupacao %>% mutate(trimestre = "2020/1T")
+pnad_2020_2_setor_ocupacao <- pnad_2020_2_setor_ocupacao %>% mutate(trimestre = "2020/2T")
+pnad_2020_3_setor_ocupacao <- pnad_2020_3_setor_ocupacao %>% mutate(trimestre = "2020/3T")
+pnad_2020_4_setor_ocupacao <- pnad_2020_4_setor_ocupacao %>% mutate(trimestre = "2020/4T")
+pnad_2021_1_setor_ocupacao <- pnad_2021_1_setor_ocupacao %>% mutate(trimestre = "2021/1T")
+pnad_2021_2_setor_ocupacao <- pnad_2021_2_setor_ocupacao %>% mutate(trimestre = "2021/2T")
+
+
+
+pnad_setor_ocupacao_agregado <- rbindlist(list(pnad_2019_setor_ocupacao,
+                                       pnad_2020_1_setor_ocupacao,
+                                       pnad_2020_2_setor_ocupacao,
+                                       pnad_2020_3_setor_ocupacao,
+                                       pnad_2020_4_setor_ocupacao,
+                                       pnad_2021_1_setor_ocupacao,
+                                       pnad_2021_2_setor_ocupacao))
+
+
+# separando as colunas de setor e posicao na ocupacao 
+
+pnad_setor_ocupacao_agregado <- pnad_setor_ocupacao_agregado %>% 
+  separate( 
+    col = "interaction(VD4009, VD4010)", 
+    into = c("posicao_ocupacao", "setor"),
+    sep = "\\.")
+
+
+View(pnad_setor_ocupacao_agregado)
+
+
+###
+
+pnad_setor_ocupacao_agregado <- pnad_setor_ocupacao_agregado %>% 
+  select(trimestre, posicao_ocupacao, setor, `as.integer(VD4002 == "Pessoas ocupadas")`) %>% 
+  rename(total_ocupados = `as.integer(VD4002 == "Pessoas ocupadas")`)
+
+
+pnad_setor_ocupacao_agregado$total_ocupados <- round(pnad_setor_ocupacao_agregado$total_ocupados, digits = 0)
+
+View(pnad_setor_ocupacao_agregado)
+
+### exportar os dados 
+
+write.csv(pnad_setor_ocupacao_agregado,file = "pnad_setor_ocupacao_agregado.csv")
 
 
 
