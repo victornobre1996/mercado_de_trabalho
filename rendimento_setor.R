@@ -38,6 +38,7 @@ h <-a$variables$VD4010[40] # "Informação, comunicação e atividades financeir
 f <-a$variables$VD4010[30] # "Outros Serviços"
 g <-a$variables$VD4008[1] # "Empregado no Setor Privado"
 aea <-a$variables$VD4010[10] # "Alojamento e alimentação"
+r <- pnad_2020_1$variables$VD4010[204] # "Atividades Mal Definidas"
 
 mylist <- list(pnad_2019, pnad_2020_1, pnad_2020_2, pnad_2020_3,
                pnad_2020_4, pnad_2020_1, pnad_2021_2)
@@ -63,11 +64,11 @@ for (W in seq_along(mylist)){
                          a$variables$VD4011 == "Trabalhadores de apoio administrativo"] <- as.factor(f)
     a$variables$VD4010[a$variables$VD4010 == "Serviços domésticos"] <- as.factor(f)
     a$variables$VD4010[a$variables$VD4010 == aea] <- as.factor(f)
+    a$variables$VD4010[a$variables$VD4010 == r] <- as.factor(f)
     
     assign(paste0("pnad_",mylist_1[[W]]),a);
 }
 rm(a,e,f,aea,h,g,var_select)
-
 
 
 ## RENDIMENTO MEDIO POR SETOR ##
