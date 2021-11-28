@@ -1,3 +1,6 @@
+##Posição na Ocupação - Total da Economia##
+
+
 rm(list = ls())
 
 ## Scrit formulado por Victor Nobre, Ledson Gomes e Igor Soares
@@ -48,6 +51,7 @@ mylist <- list(pnad_2019, pnad_2020_1, pnad_2020_2, pnad_2020_3,
 mylist_1 <- list("2019","2020_1", "2020_2",
                  "2020_3", "2020_4",
                  "2021_1", "2021_2")
+
 
 #Loop para a Substituição
 for (W in seq_along(mylist)){
