@@ -1,5 +1,4 @@
-##Posição na Ocupação - Total da Economia##
-
+##Posição na Ocupação - Total da Economia ##
 
 rm(list = ls())
 
@@ -11,11 +10,8 @@ rm(list = ls())
 
 library(PNADcIBGE)
 library(tidyverse)
-#library(descr)
 library(survey)
-#library(sidrar)
 library(data.table)
-
 
 # baixando as bases
 
@@ -111,7 +107,6 @@ for (i in seq_along(mylist)) {
   rm(a,b,d);
 }
 
-
 pnad_ocupacao_agregado <-rbindlist(list(pnad_ocupacao_1,
                                         pnad_ocupacao_2,
                                         pnad_ocupacao_3,
@@ -119,5 +114,9 @@ pnad_ocupacao_agregado <-rbindlist(list(pnad_ocupacao_1,
                                         pnad_ocupacao_5,
                                         pnad_ocupacao_6,
                                         pnad_ocupacao_7), use.names=FALSE)
+
+##Exportando Resultados
+write.csv(pnad_ocupacao_agregado, file = "pnad_ocupacao_agregado.csv")
+
 
 
