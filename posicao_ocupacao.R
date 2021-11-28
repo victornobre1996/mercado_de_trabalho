@@ -41,6 +41,8 @@ g <-a$variables$VD4008[1] # "Empregado no Setor Privado"
 aea <-a$variables$VD4010[10] # "Alojamento e alimentação"
 r <- pnad_2020_1$variables$VD4010[204] # "Atividades Mal Definidas"
 
+##Definindo Listas##
+
 mylist <- list(pnad_2019, pnad_2020_1, pnad_2020_2, pnad_2020_3,
                pnad_2020_4, pnad_2020_1, pnad_2021_2)
 mylist_1 <- list("2019","2020_1", "2020_2",
