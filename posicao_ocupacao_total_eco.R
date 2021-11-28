@@ -119,3 +119,5 @@ pnad_ocupacao_agregado <-rbindlist(list(pnad_ocupacao_1,
                                         pnad_ocupacao_5,
                                         pnad_ocupacao_6,
                                         pnad_ocupacao_7), use.names=FALSE)
+
+
