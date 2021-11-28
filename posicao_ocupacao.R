@@ -34,6 +34,7 @@ pnad_2021_2 <- get_pnadc(year = 2021, quarter = 2, vars = var_select)
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 ##Classificações de Referência##
 a <- pnad_2019
 e <-a$variables$VD4010[21] # "Administração pública, defesa e seguridade social "
@@ -77,6 +78,8 @@ rm(a,e,f,aea,h,g,var_select)
 # numero de ocupados por setor e posicao na ocupacao 
 
 
+=======
+>>>>>>> parent of a268f07 (adicionando codigo para diferentes setores)
 =======
 >>>>>>> parent of a268f07 (adicionando codigo para diferentes setores)
 =======
