@@ -31,10 +31,6 @@ pnad_2021_2 <- get_pnadc(year = 2021, quarter = 2, vars = var_select)
 
 # Combinando categorias - para compatibilização com o PIB Trimestral
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 ##Classificações de Referência##
 a <- pnad_2019
 e <-a$variables$VD4010[21] # "Administração pública, defesa e seguridade social "
@@ -43,6 +39,7 @@ h <-a$variables$VD4010[40] # "Informação, comunicação e atividades financeir
 f <-a$variables$VD4010[30] # "Outros Serviços"
 g <-a$variables$VD4008[1] # "Empregado no Setor Privado"
 aea <-a$variables$VD4010[10] # "Alojamento e alimentação"
+r <- pnad_2020_1$variables$VD4010[204] # "Atividades Mal Definidas"
 
 mylist <- list(pnad_2019, pnad_2020_1, pnad_2020_2, pnad_2020_3,
                pnad_2020_4, pnad_2020_1, pnad_2021_2)
@@ -68,59 +65,51 @@ for (W in seq_along(mylist)){
                        a$variables$VD4011 == "Trabalhadores de apoio administrativo"] <- as.factor(f)
   a$variables$VD4010[a$variables$VD4010 == "Serviços domésticos"] <- as.factor(f)
   a$variables$VD4010[a$variables$VD4010 == aea] <- as.factor(f)
+  a$variables$VD4010[a$variables$VD4010 == r] <- as.factor(f)
   
-  assign(paste0("pnad_1",mylist_1[[W]]),a);
+  assign(paste0("pnad_",mylist_1[[W]]),a);
 }
-rm(a,e,f,aea,h,g,var_select)
+rm(r,a,e,f,aea,h,g,var_select)
 
 
+#Ocupação - Total da Economia #
 
-# numero de ocupados por setor e posicao na ocupacao 
+mylist <- list(pnad_2019, pnad_2020_1, pnad_2020_2, pnad_2020_3,
+               pnad_2020_4, pnad_2021_1, pnad_2021_2)
+mylist_1 <-list("2019/4T", "2020/1T", "2020/2T", "2020/3T",
+                "2020/4T", "2021/1T", "2021/2T")
 
-
-=======
->>>>>>> parent of a268f07 (adicionando codigo para diferentes setores)
-=======
->>>>>>> parent of a268f07 (adicionando codigo para diferentes setores)
-=======
->>>>>>> parent of a268f07 (adicionando codigo para diferentes setores)
-=======
->>>>>>> parent of a268f07 (adicionando codigo para diferentes setores)
-pnad_2019_setor_ocupacao <- svyby(formula =~as.integer(VD4002 == "Pessoas ocupadas"),
-                        by = ~interaction(VD4009,VD4010), design = pnad_2019, FUN=svytotal, keep.names=FALSE, na.rm=TRUE)
-
-pnad_2020_1_setor_ocupacao <- svyby(formula =~as.integer(VD4002 == "Pessoas ocupadas"),
-                                  by = ~interaction(VD4009,VD4010), design = pnad_2020_1, FUN=svytotal, keep.names=FALSE, na.rm=TRUE)
-
-pnad_2020_2_setor_ocupacao <- svyby(formula =~as.integer(VD4002 == "Pessoas ocupadas"),
-                                    by = ~interaction(VD4009,VD4010), design = subset(pnad_2020_2,V2009 >=14), FUN=svytotal, keep.names=FALSE, na.rm=TRUE)
-
-
-pnad_2020_3_setor_ocupacao <- svyby(formula =~as.integer(VD4002 == "Pessoas ocupadas"),
-                                    by = ~interaction(VD4009,VD4010), design = subset(pnad_2020_3,V2009 >=14), FUN=svytotal, keep.names=FALSE, na.rm=TRUE)
-
-
-pnad_2020_4_setor_ocupacao <- svyby(formula =~as.integer(VD4002 == "Pessoas ocupadas"),
-                                    by = ~interaction(VD4009,VD4010), design = subset(pnad_2020_4,V2009 >=14), FUN=svytotal, keep.names=FALSE, na.rm=TRUE)
-
-
-pnad_2021_1_setor_ocupacao <- svyby(formula =~as.integer(VD4002 == "Pessoas ocupadas"),
-                                    by = ~interaction(VD4009,VD4010), design = subset(pnad_2021_1,V2009 >=14), FUN=svytotal, keep.names=FALSE, na.rm=TRUE)
-
-pnad_2021_2_setor_ocupacao <- svyby(formula =~as.integer(VD4002 == "Pessoas ocupadas"),
-                                    by = ~interaction(VD4009,VD4010), design = subset(pnad_2021_2,V2009 >=14), FUN=svytotal, keep.names=FALSE, na.rm=TRUE)
+for (i in seq_along(mylist)) {
+  p <- mylist[[i]]
+  a<-as.data.frame(summary(
+    na.omit(p$variables$VD4009))) %>% 
+    mutate(trimestre = mylist_1[[i]])
+  
+  a <- a %>% mutate(row.names(a)) 
+  
+  b <-as.data.frame(summary(na.omit(
+    interaction((p$variables$VD4009),
+                (p$variables$VD4012),
+                drop = T)))) %>% 
+    mutate(trimestre = mylist_1[[i]])
+  
+  b <- b %>% mutate(row.names(b))
+  
+  b<-(b[c("Conta-própria.Contribuinte",
+          "Conta-própria.Não contribuinte",
+          "Empregador.Contribuinte",
+          "Empregador.Não contribuinte"),])
+  
+  d <- rbindlist(list(a,b), use.names=FALSE)
+  assign(paste0("pnad_ocupacao_",i), d)
+  rm(a,b,d);
+}
 
 
-
-pnad_setor_ocupacao_setor <- rbindlist(list(pnad_rendimento_medio_setor_2019,
-                                                 pnad_rendimento_medio_setor_2020_1,
-                                                 pnad_rendimento_medio_setor_2020_2,
-                                                 pnad_rendimento_medio_setor_2020_3,
-                                                 pnad_rendimento_medio_setor_2020_4,
-                                                 pnad_rendimento_medio_setor_2021_1,
-                                                 pnad_rendimento_medio_setor_2021_2))
-
-
-
-
-
+pnad_ocupacao_agregado <-rbindlist(list(pnad_ocupacao_1,
+                                        pnad_ocupacao_2,
+                                        pnad_ocupacao_3,
+                                        pnad_ocupacao_4,
+                                        pnad_ocupacao_5,
+                                        pnad_ocupacao_6,
+                                        pnad_ocupacao_7), use.names=FALSE)
