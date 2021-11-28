@@ -64,7 +64,7 @@ for (W in seq_along(mylist)){
     a$variables$VD4010[a$variables$VD4010 == "Serviços domésticos"] <- as.factor(f)
     a$variables$VD4010[a$variables$VD4010 == aea] <- as.factor(f)
     
-    assign(paste0("pnad_1",mylist_1[[W]]),a);
+    assign(paste0("pnad_",mylist_1[[W]]),a);
 }
 rm(a,e,f,aea,h,g,var_select)
 
