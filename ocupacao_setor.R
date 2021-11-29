@@ -1,5 +1,7 @@
 ##Posição na Ocupação - Total da Economia ##
 
+##droplevels
+
 rm(list = ls())
 
 ## Scrit formulado por Victor Nobre, Ledson Gomes e Igor Soares
@@ -42,17 +44,18 @@ r <- pnad_2020_1$variables$VD4010[204] # "Atividades Mal Definidas"
 
 ##Definindo Listas##
 
-mylist <- list(pnad_2019, pnad_2020_1, pnad_2020_2, pnad_2020_3,
-               pnad_2020_4, pnad_2020_1, pnad_2021_2)
+mylist <- list(pnad_2019, pnad_2020_1, pnad_2020_2, 
+               pnad_2020_3,pnad_2020_4, 
+               pnad_2020_1, pnad_2021_2)
 mylist_1 <- list("2019","2020_1", "2020_2",
                  "2020_3", "2020_4",
                  "2021_1", "2021_2")
 
 
 #Loop para a Substituição
-for (W in seq_along(mylist)){
+for (i in seq_along(mylist)){
   
-  a <- mylist[[W]]
+  a <- mylist[[i]]
   
   # ***Separando Emprego Público e Privado em Adm. Pública(etc) e Outros (respectivamente) ***
   a$variables$VD4010[a$variables$VD4010 == "Educação, saúde humana e serviços sociais" &
@@ -68,11 +71,14 @@ for (W in seq_along(mylist)){
   a$variables$VD4010[a$variables$VD4010 == "Serviços domésticos"] <- as.factor(f)
   a$variables$VD4010[a$variables$VD4010 == aea] <- as.factor(f)
   a$variables$VD4010[a$variables$VD4010 == r] <- as.factor(f)
-  
-  assign(paste0("pnad_",mylist_1[[W]]),a);
-}
-rm(r,a,e,f,aea,h,g,var_select)
 
+  
+  
+  assign(paste0("pnad_", mylist_1[[i]]),a)
+  ;
+}
+
+rm(r,a,e,f,aea,h,g,var_select)
 
 #Ocupação - Total da Economia #
 
@@ -116,9 +122,8 @@ for (i in seq_along(mylist)) {
   b <- b_c %>% unite(col = "row.names(b)", 
                      ocupacao:PS,
                      sep = " ")
-  view(b)
   d <- rbindlist(list(a,b), use.names=FALSE)
-  assign(paste0("pnad_ocupacao_setores_setores_",i), d);
+  assign(paste0("pnad_ocupacao_setores_",i), d);
 }
 
 pnad_ocupacao_setores_agregado <-rbindlist(list(pnad_ocupacao_setores_1,
