@@ -40,6 +40,14 @@ g <-a$variables$VD4008[1] # "Empregado no Setor Privado"
 aea <-a$variables$VD4010[10] # "Alojamento e alimentação"
 r <- pnad_2020_1$variables$VD4010[204] # "Atividades Mal Definidas"
 
+##Modificações nos Tipos de Ocupação##
+a_1 <- a$variables$VD4009[10]
+a_2 <- a$variables$VD4009[59]
+o_cp <- recode(a_1, "Conta-própria" = "Conta-própria que contribuí para PS")
+o_ncp <- recode(a_1, "Conta-própria" = "Conta-própria que não contribuí para PS")
+o_emp <- recode(a_1, "Conta-própria" = "Empregador que contribuí para PS")
+o_nemp <- recode(a_1, "Conta-própria" = "Empregador que não contribuí para PS")
+
 ##Definindo Listas##
 
 mylist <- list(pnad_2019, pnad_2020_1, pnad_2020_2, pnad_2020_3,
@@ -69,15 +77,19 @@ for (W in seq_along(mylist)){
   a$variables$VD4010[a$variables$VD4010 == aea] <- as.factor(f)
   a$variables$VD4010[a$variables$VD4010 == r] <- as.factor(f)
   
+  # *** Discriminando contribuição para Previdência Social (PS) ***
+  a$variables$VD4019[a$variables$VD4019 == a_1 & a$variables$VD4012 == "Contribuinte" ] <- as.factor(o_cp)
+  a$variables$VD4019[a$variables$VD4019 == a_1 & a$variables$VD4012 != "Contribuinte" ] <- as.factor(o_ncp)
+  a$variables$VD4019[a$variables$VD4019 == a_2 & a$variables$VD4012 == "Contribuinte" ] <- as.factor(o_emp)
+  a$variables$VD4019[a$variables$VD4019 == a_2 & a$variables$VD4012 != "Contribuinte" ] <- as.factor(o_nemp)
+  
   assign(paste0("pnad_",mylist_1[[W]]),a);
 }
 rm(r,a,e,f,aea,h,g,var_select)
 
-
+view(a$variables$VD4012)
 #Ocupação - Total da Economia #
 
-mylist <- list(pnad_2019, pnad_2020_1, pnad_2020_2, pnad_2020_3,
-               pnad_2020_4, pnad_2021_1, pnad_2021_2)
 mylist_1 <-list("2019/4T", "2020/1T", "2020/2T", "2020/3T",
                 "2020/4T", "2021/1T", "2021/2T")
 
