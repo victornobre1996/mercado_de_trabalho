@@ -1,4 +1,4 @@
-##Posição na Ocupação - Por setor ##
+##Posição na Ocupação - Total da Economia ##
 
 rm(list = ls())
 
@@ -40,14 +40,6 @@ g <-a$variables$VD4008[1] # "Empregado no Setor Privado"
 aea <-a$variables$VD4010[10] # "Alojamento e alimentação"
 r <- pnad_2020_1$variables$VD4010[204] # "Atividades Mal Definidas"
 
-##Modificações nos Tipos de Ocupação##
-a_1 <- a$variables$VD4009[10]
-a_2 <- a$variables$VD4009[59]
-o_cp <- recode(a_1, "Conta-própria" = "Conta-própria que contribuí para PS")
-o_ncp <- recode(a_1, "Conta-própria" = "Conta-própria que não contribuí para PS")
-o_emp <- recode(a_1, "Conta-própria" = "Empregador que contribuí para PS")
-o_nemp <- recode(a_1, "Conta-própria" = "Empregador que não contribuí para PS")
-
 ##Definindo Listas##
 
 mylist <- list(pnad_2019, pnad_2020_1, pnad_2020_2, pnad_2020_3,
@@ -77,58 +69,68 @@ for (W in seq_along(mylist)){
   a$variables$VD4010[a$variables$VD4010 == aea] <- as.factor(f)
   a$variables$VD4010[a$variables$VD4010 == r] <- as.factor(f)
   
-  # *** Discriminando contribuição para Previdência Social (PS) ***
-  a$variables$VD4019[a$variables$VD4019 == a_1 & a$variables$VD4012 == "Contribuinte" ] <- as.factor(o_cp)
-  a$variables$VD4019[a$variables$VD4019 == a_1 & a$variables$VD4012 != "Contribuinte" ] <- as.factor(o_ncp)
-  a$variables$VD4019[a$variables$VD4019 == a_2 & a$variables$VD4012 == "Contribuinte" ] <- as.factor(o_emp)
-  a$variables$VD4019[a$variables$VD4019 == a_2 & a$variables$VD4012 != "Contribuinte" ] <- as.factor(o_nemp)
-  
   assign(paste0("pnad_",mylist_1[[W]]),a);
 }
 rm(r,a,e,f,aea,h,g,var_select)
 
-view(a$variables$VD4012)
+
 #Ocupação - Total da Economia #
 
 mylist_1 <-list("2019/4T", "2020/1T", "2020/2T", "2020/3T",
                 "2020/4T", "2021/1T", "2021/2T")
 
 for (i in seq_along(mylist)) {
-  p <- mylist[[i]]
-  a<-as.data.frame(summary(
-    na.omit(p$variables$VD4009))) %>% 
+  p <-mylist[[i]]
+  a<-as.data.frame(summary(na.omit(
+    interaction((p$variables$VD4010),
+                (p$variables$VD4009),drop = T)))) %>% 
     mutate(trimestre = mylist_1[[i]])
-  
   a <- a %>% mutate(row.names(a)) 
   
+  a <- a %>% 
+    separate( 
+      col = "row.names(a)", 
+      into = c("setor", "ocupacao"),
+      sep = "\\.")
+  
+  a <- a[a$ocupacao != "Empregador" & a$ocupacao != "Conta-própria" ,]
   b <-as.data.frame(summary(na.omit(
-    interaction((p$variables$VD4009),
+    interaction((p$variables$VD4010),
+                (p$variables$VD4009),
                 (p$variables$VD4012),
                 drop = T)))) %>% 
     mutate(trimestre = mylist_1[[i]])
   
+  b <- b[-c(nrow(b)),]
   b <- b %>% mutate(row.names(b))
+  b <- b %>% 
+    separate( 
+      col = "row.names(b)", 
+      into = c("setor", "ocupacao", "PS"),
+      sep = "\\.")
   
-  b<-(b[c("Conta-própria.Contribuinte",
-          "Conta-própria.Não contribuinte",
-          "Empregador.Contribuinte",
-          "Empregador.Não contribuinte"),])
+  b_1 <- b[b$ocupacao == "Empregador",]
+  b_2 <- b[b$ocupacao == "Conta-própria",]
+  b_c <- rbindlist(list(b_1,b_2))
   
+  b <- b_c %>% unite(col = "row.names(b)", 
+                     ocupacao:PS,
+                     sep = " ")
+  view(b)
   d <- rbindlist(list(a,b), use.names=FALSE)
-  assign(paste0("pnad_ocupacao_",i), d)
-  rm(a,b,d);
+  assign(paste0("pnad_ocupacao_setores_setores_",i), d);
 }
 
-pnad_ocupacao_agregado <-rbindlist(list(pnad_ocupacao_1,
-                                        pnad_ocupacao_2,
-                                        pnad_ocupacao_3,
-                                        pnad_ocupacao_4,
-                                        pnad_ocupacao_5,
-                                        pnad_ocupacao_6,
-                                        pnad_ocupacao_7), use.names=FALSE)
+pnad_ocupacao_setores_agregado <-rbindlist(list(pnad_ocupacao_setores_1,
+                                        pnad_ocupacao_setores_2,
+                                        pnad_ocupacao_setores_3,
+                                        pnad_ocupacao_setores_4,
+                                        pnad_ocupacao_setores_5,
+                                        pnad_ocupacao_setores_6,
+                                        pnad_ocupacao_setores_7), use.names=FALSE)
 
 ##Exportando Resultados
-write.csv(pnad_ocupacao_agregado, file = "pnad_ocupacao_agregado.csv")
+write.csv(pnad_ocupacao_setores_agregado, file = "pnad_ocupacao_setores_agregado.csv")
 
 
 
