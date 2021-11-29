@@ -80,16 +80,21 @@ for (i in seq_along(mylist)){
 
 rm(r,a,e,f,aea,h,g,var_select)
 
+mylist <- list(pnad_2019, pnad_2020_1, pnad_2020_2, 
+               pnad_2020_3,pnad_2020_4, 
+               pnad_2020_1, pnad_2021_2)
+
+
 #Ocupação - Total da Economia #
 
 mylist_1 <-list("2019/4T", "2020/1T", "2020/2T", "2020/3T",
                 "2020/4T", "2021/1T", "2021/2T")
 
 for (i in seq_along(mylist)) {
-  p <-mylist[[i]]
-  a<-as.data.frame(summary(na.omit(
-    interaction((p$variables$VD4010),
-                (p$variables$VD4009),drop = T)))) %>% 
+  p <- mylist[[i]]
+  a <- as.data.frame(summary(na.omit(
+    interaction(droplevels(p$variables$VD4010),
+                droplevels(p$variables$VD4009),drop = T)))) %>% 
     mutate(trimestre = mylist_1[[i]])
   a <- a %>% mutate(row.names(a)) 
   
@@ -101,9 +106,9 @@ for (i in seq_along(mylist)) {
   
   a <- a[a$ocupacao != "Empregador" & a$ocupacao != "Conta-própria" ,]
   b <-as.data.frame(summary(na.omit(
-    interaction((p$variables$VD4010),
-                (p$variables$VD4009),
-                (p$variables$VD4012),
+    interaction(droplevels(p$variables$VD4010),
+                droplevels(p$variables$VD4009),
+                droplevels(p$variables$VD4012),
                 drop = T)))) %>% 
     mutate(trimestre = mylist_1[[i]])
   
