@@ -29,6 +29,67 @@ pnad_2020_4 <- get_pnadc(year = 2020, quarter = 4, vars = var_select)
 pnad_2021_1 <- get_pnadc(year = 2021, quarter = 1, vars = var_select)
 pnad_2021_2 <- get_pnadc(year = 2021, quarter = 2, vars = var_select)
 
+## Ocupação - Categorias PNAD
+mylist <- list(pnad_2019, pnad_2020_1, pnad_2020_2, 
+               pnad_2020_3,pnad_2020_4, 
+               pnad_2020_1, pnad_2021_2)
+mylist_1 <-list("2019/4T", "2020/1T", "2020/2T", "2020/3T",
+                "2020/4T", "2021/1T", "2021/2T")
+
+for (i in seq_along(mylist)) {
+  p <- mylist[[i]]
+  a <- as.data.frame(summary(na.omit(
+    interaction(droplevels(p$variables$VD4010),
+                droplevels(p$variables$VD4009),drop = T)))) %>% 
+    mutate(trimestre = mylist_1[[i]])
+  a <- a %>% mutate(row.names(a)) 
+  
+  a <- a %>% 
+    separate( 
+      col = "row.names(a)", 
+      into = c("setor", "ocupacao"),
+      sep = "\\.")
+  
+  a <- a[a$ocupacao != "Empregador" & a$ocupacao != "Conta-própria" ,]
+  b <-as.data.frame(summary(na.omit(
+    interaction(droplevels(p$variables$VD4010),
+                droplevels(p$variables$VD4009),
+                droplevels(p$variables$VD4012),
+                drop = T)))) %>% 
+    mutate(trimestre = mylist_1[[i]])
+  
+  b <- b[-c(nrow(b)),]
+  b <- b %>% mutate(row.names(b))
+  b <- b %>% 
+    separate( 
+      col = "row.names(b)", 
+      into = c("setor", "ocupacao", "PS"),
+      sep = "\\.")
+  
+  b_1 <- b[b$ocupacao == "Empregador",]
+  b_2 <- b[b$ocupacao == "Conta-própria",]
+  b_c <- rbindlist(list(b_1,b_2))
+  
+  b <- b_c %>% unite(col = "row.names(b)", 
+                     ocupacao:PS,
+                     sep = " ")
+  d <- rbindlist(list(a,b), use.names=FALSE)
+  assign(paste0("pnad_ocupacao_setores_",i), d);
+}
+
+pnad_ocupacao_setores_agregado <-rbindlist(list(pnad_ocupacao_setores_1,
+                                                pnad_ocupacao_setores_2,
+                                                pnad_ocupacao_setores_3,
+                                                pnad_ocupacao_setores_4,
+                                                pnad_ocupacao_setores_5,
+                                                pnad_ocupacao_setores_6,
+                                                pnad_ocupacao_setores_7), use.names=FALSE)
+
+##Exportando Resultados
+write.csv(pnad_ocupacao_setores_agregado, file = "pnad_ocupacao_setores_agregado.csv")
+
+
+
 
 # Combinando categorias - para compatibilização com o PIB Trimestral
 
