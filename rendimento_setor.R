@@ -8,9 +8,7 @@ rm(list = ls())
 
 library(PNADcIBGE)
 library(tidyverse)
-#library(descr)
 library(survey)
-#library(sidrar)
 library(data.table)
 
 # baixando as bases
@@ -79,12 +77,48 @@ pnad_rendimento_medio_total_2020_3 <- svyby(formula =~(VD4019_real =VD4019*Habit
 pnad_rendimento_medio_total_2020_4 <- svyby(formula =~(VD4019_real =VD4019*Habitual), by = ~Ano, design = pnad_2020_4, FUN = svymean, na.rm = TRUE )
 pnad_rendimento_medio_total_2021_1 <- svyby(formula =~(VD4019_real =VD4019*Habitual), by = ~Ano, design = pnad_2021_1, FUN = svymean, na.rm = TRUE )
 pnad_rendimento_medio_total_2021_2 <- svyby(formula =~(VD4019_real =VD4019*Habitual), by = ~Ano, design = pnad_2021_2, FUN = svymean, na.rm = TRUE )
-pnad_rendimento_medio_total_2021_3 <- svyby(formula =~(VD4019_real =VD4019*Habitual), by = ~Ano, design = pnad_2021_3, FUN = svymean, na.rm = TRUE )
+pnad_rendimento_medio_total_2021_3 <- svyby(formula =~(VD4019_real =VD4019), by = ~Ano, design = pnad_2021_3, FUN = svymean, na.rm = TRUE )
+
+# adicionar os trimestres e organizar dataframe
+
+mylist_1 <-list("2019/4T", "2020/1T", "2020/2T", "2020/3T",
+                "2020/4T", "2021/1T", "2021/2T", "2021/3T")
+mylist_2 <- list("2019","2020_1", "2020_2",
+                 "2020_3", "2020_4",
+                 "2021_1", "2021_2","2021_3")
 
 
+l <- list(pnad_rendimento_medio_total_2019,
+          pnad_rendimento_medio_total_2020_1,
+          pnad_rendimento_medio_total_2020_2,
+          pnad_rendimento_medio_total_2020_3,
+          pnad_rendimento_medio_total_2020_4,
+          pnad_rendimento_medio_total_2021_1,
+          pnad_rendimento_medio_total_2021_2,
+          pnad_rendimento_medio_total_2021_3)
 
+for (i in seq_along(l)) {
+    a <- l[[i]]
+    a$trimestre <- c(mylist_1[[i]])
+    a <- a %>% select(-"Ano", -"se")
+    assign(paste0("pnad_rendimento_medio_total_",mylist_2[[i]]), a);
+    
+}
 
+pnad_rendimento_medio_total <-rbindlist(list(pnad_rendimento_medio_total_2019,
+                                             pnad_rendimento_medio_total_2020_1,
+                                             pnad_rendimento_medio_total_2020_2,
+                                             pnad_rendimento_medio_total_2020_3,
+                                             pnad_rendimento_medio_total_2020_4,
+                                             pnad_rendimento_medio_total_2021_1,
+                                             pnad_rendimento_medio_total_2021_2,
+                                             pnad_rendimento_medio_total_2021_3), use.names = F)
 
+pnad_rendimento_medio_total <- pnad_rendimento_medio_total %>% rename(rendimento_medio_real = "VD4019_real = VD4019 * Habitual")
+
+pnad_rendimento_medio_total$setor <- "Total"
+
+pnad_rendimento_medio_total <- pnad_rendimento_medio_total %>% select(trimestre, setor ,rendimento_medio_real)
 
 
 
@@ -97,7 +131,7 @@ pnad_rendimento_medio_setor_2020_3 <- svyby(formula =~(VD4019_real =VD4019*Habit
 pnad_rendimento_medio_setor_2020_4 <- svyby(formula =~(VD4019_real =VD4019*Habitual), by = ~VD4010, design = pnad_2020_4, FUN = svymean, na.rm = TRUE )
 pnad_rendimento_medio_setor_2021_1 <- svyby(formula =~(VD4019_real =VD4019*Habitual), by = ~VD4010, design = pnad_2021_1, FUN = svymean, na.rm = TRUE )
 pnad_rendimento_medio_setor_2021_2 <- svyby(formula =~(VD4019_real =VD4019*Habitual), by = ~VD4010, design = pnad_2021_2, FUN = svymean, na.rm = TRUE )
-pnad_rendimento_medio_setor_2021_3 <- svyby(formula =~(VD4019_real =VD4019*Habitual), by = ~VD4010, design = pnad_2021_3, FUN = svymean, na.rm = TRUE )
+pnad_rendimento_medio_setor_2021_3 <- svyby(formula =~(VD4019_real =VD4019), by = ~VD4010, design = pnad_2021_3, FUN = svymean, na.rm = TRUE )
 
 # adicionar os trimestres
 
@@ -132,49 +166,14 @@ pnad_rendimento_agregado_setor <- pnad_rendimento_agregado_setor %>% rename(rend
 
 pnad_rendimento_agregado_setor <- pnad_rendimento_agregado_setor %>% select(trimestre, setor, rendimento_medio_real )
 
-pnad_rendimento_agregado_setor$rendimento_medio_nominal <- round(pnad_rendimento_agregado_setor$rendimento_medio_real, digits = 2)
+pnad_rendimento_agregado_setor$rendimento_medio_real <- round(pnad_rendimento_agregado_setor$rendimento_medio_real, digits = 2)
+
+# agregando as todas as bases
+
+pnad_rendimento_agregado_setor_total <- rbindlist(list(pnad_rendimento_agregado_setor,
+                                                       pnad_rendimento_agregado_total), use.names = F)
+
 
 # ---- exportando a base no R ---- 
-write.csv(pnad_rendimento_agregado_setor, file = "pnad_rendimento_agregado_setor.csv")
+write.csv(pnad_rendimento_agregado_setor_total, file = "pnad_rendimento_agregado_setor_total.csv")
 
-
-
-
-
-pnad_rendimento_medio_2019 <- svyby(formula =~(VD4019_real =VD4019*Habitual), by = ~Ano, design = pnad_2019, FUN = svymean, na.rm = TRUE )
-
-View(pnad_2019$variables)
-
-summary(pnad_2019$variables$VD4019*pnad_2019$variables$Habitual)
-View(pnad_rendimento_medio_2019)
-mylist_1 <-list("2019/4T", "2020/1T", "2020/2T", "2020/3T",
-                "2020/4T", "2021/1T", "2021/2T")
-mylist_2 <- list("2019","2020_1", "2020_2",
-                 "2020_3", "2020_4",
-                 "2021_1", "2021_2","2021_3")
-
-
-l <- list(pnad_rendimento_medio_total_2019,
-          pnad_rendimento_medio_total_2020_1,
-          pnad_rendimento_medio_total_2020_2,
-          pnad_rendimento_medio_total_2020_3,
-          pnad_rendimento_medio_total_2020_4,
-          pnad_rendimento_medio_total_2021_1,
-          pnad_rendimento_medio_total_2021_2,
-          pnad_rendimento_medio_total_2021_3)
-
-for (i in seq_along(l)) {
-  a <- l[[i]]
-  a$Trimestre <- c(mylist_1[[i]])
-  a <- a %>% select(-"Ano")
-  assign(paste0("pnad_rendimento_medio_total_1",mylist_2[[i]]), a);
-  
-}
-
-
-pnad_rendimento_medio_2019 <- svyby(formula =~(VD4019_real =VD4019*Habitual), by = ~Ano, design = pnad_2019, FUN = svymean, na.rm = TRUE )
-
-View(pnad_2019$variables)
-
-summary(pnad_2019$variables$VD4019*pnad_2019$variables$Habitual)
-View(pnad_rendimento_medio_2019)
