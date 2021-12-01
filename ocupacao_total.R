@@ -26,13 +26,14 @@ pnad_2020_3 <- get_pnadc(year = 2020, quarter = 3, vars = var_select)
 pnad_2020_4 <- get_pnadc(year = 2020, quarter = 4, vars = var_select)
 pnad_2021_1 <- get_pnadc(year = 2021, quarter = 1, vars = var_select)
 pnad_2021_2 <- get_pnadc(year = 2021, quarter = 2, vars = var_select)
+pnad_2021_3 <- get_pnadc(year = 2021, quarter = 3, vars = var_select)
 
 #Ocupação - Total da Economia #
 
 mylist <- list(pnad_2019, pnad_2020_1, pnad_2020_2, pnad_2020_3,
-               pnad_2020_4, pnad_2021_1, pnad_2021_2)
+               pnad_2020_4, pnad_2020_1, pnad_2021_2, pnad_2021_3)
 mylist_1 <-list("2019/4T", "2020/1T", "2020/2T", "2020/3T",
-                "2020/4T", "2021/1T", "2021/2T")
+                "2020/4T", "2021/1T", "2021/2T", "2021/3T")
 
 for (i in seq_along(mylist)) {
   p <- mylist[[i]]
@@ -66,7 +67,8 @@ pnad_ocupacao_agregado <-rbindlist(list(pnad_ocupacao_1,
                                         pnad_ocupacao_4,
                                         pnad_ocupacao_5,
                                         pnad_ocupacao_6,
-                                        pnad_ocupacao_7), use.names=FALSE)
+                                        pnad_ocupacao_7,
+                                        pnad_ocupacao_8), use.names=FALSE)
 
 ##Exportando Resultados
 write.csv(pnad_ocupacao_agregado, file = "pnad_ocupacao_agregado.csv")
