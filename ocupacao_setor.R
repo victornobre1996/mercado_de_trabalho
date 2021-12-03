@@ -87,10 +87,14 @@ pnad_ocupacao_setores_agregado <-rbindlist(list(pnad_ocupacao_setores_1,
                                                 pnad_ocupacao_setores_7,
                                                 pnad_ocupacao_setores_8), use.names=FALSE)
 
+
+pnad_ocupacao_setores_agregado$Numero_de_Ocupados <- pnad_ocupacao_setores_agregado$`summary(na.omit(interaction(droplevels(p$variables$VD4010), droplevels(p$variables$VD4009), drop = T)))`
+
+pnad_ocupacao_setores_agregado <- pnad_ocupacao_setores_agregado %>% select(trimestre, setor, ocupacao ,
+                                                                            Numero_de_Ocupados)
+
 ##Exportando Resultados
 write.csv(pnad_ocupacao_setores_agregado, file = "pnad_ocupacao_setores_agregado_PNAD.csv")
-
-
 
 
 # Combinando categorias - para compatibilização com o PIB Trimestral
@@ -109,8 +113,8 @@ r <- pnad_2020_1$variables$VD4010[204] # "Atividades Mal Definidas"
 
 mylist <- list(pnad_2019, pnad_2020_1, pnad_2020_2, pnad_2020_3,
                pnad_2020_4, pnad_2020_1, pnad_2021_2, pnad_2021_3)
-mylist_1 <-list("2019/4T", "2020/1T", "2020/2T", "2020/3T",
-                "2020/4T", "2021/1T", "2021/2T", "2021/3T")
+mylist_1 <-list("2019","2020_1", "2020_2",
+                "2020_3", "2020_4", "2021_1", "2021_2","2021_3")
 
 
 #Loop para a Substituição
@@ -141,9 +145,10 @@ for (i in seq_along(mylist)){
 
 rm(r,a,e,f,aea,h,g,var_select)
 
-mylist <- list(pnad_2019, pnad_2020_1, pnad_2020_2, 
-               pnad_2020_3,pnad_2020_4, 
-               pnad_2020_1, pnad_2021_2, pnad_2021_3)
+
+
+mylist <- list(pnad_2019, pnad_2020_1, pnad_2020_2, pnad_2020_3,
+               pnad_2020_4, pnad_2020_1, pnad_2021_2, pnad_2021_3)
 
 
 #Ocupação - Total da Economia #
@@ -200,6 +205,11 @@ pnad_ocupacao_setores_agregado <-rbindlist(list(pnad_ocupacao_setores_1,
                                         pnad_ocupacao_setores_6,
                                         pnad_ocupacao_setores_7,
                                         pnad_ocupacao_setores_8), use.names=FALSE)
+
+
+pnad_ocupacao_setores_agregado$Numero_de_Ocupados <- pnad_ocupacao_setores_agregado$`summary(na.omit(interaction(droplevels(p$variables$VD4010), droplevels(p$variables$VD4009), drop = T)))`
+
+pnad_ocupacao_setores_agregado <- pnad_ocupacao_setores_agregado %>% select(trimestre, setor, ocupacao, Numero_de_Ocupados)
 
 ##Exportando Resultados
 write.csv(pnad_ocupacao_setores_agregado, file = "pnad_ocupacao_setores_agregado.csv")
