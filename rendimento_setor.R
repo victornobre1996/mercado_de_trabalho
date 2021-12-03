@@ -66,7 +66,7 @@ for (W in seq_along(mylist)){
     
     assign(paste0("pnad_",mylist_1[[W]]),a);
 }
-rm(a,e,f,aea,h,g,var_select)
+rm(r,a,e,f,aea,h,g,var_select)
 
 ## RENDIMENTO MEDIO - Total Trimestre ##
 
@@ -120,6 +120,8 @@ pnad_rendimento_medio_total$setor <- "Total"
 
 pnad_rendimento_medio_total <- pnad_rendimento_medio_total %>% select(trimestre, setor ,rendimento_medio_real)
 
+pnad_rendimento_medio_total$rendimento_medio_real <- round(pnad_rendimento_medio_total$rendimento_medio_real, digits = 2)
+
 
 
 ## RENDIMENTO MEDIO POR SETOR ##
@@ -153,7 +155,7 @@ pnad_rendimento_agregado_setor <- rbindlist(list(pnad_rendimento_medio_setor_201
                                                  pnad_rendimento_medio_setor_2020_4,
                                                  pnad_rendimento_medio_setor_2021_1,
                                                  pnad_rendimento_medio_setor_2021_2,
-                                                 pnad_rendimento_medio_setor_2021_3))
+                                                 pnad_rendimento_medio_setor_2021_3), use.names = F)
 
 
 
@@ -171,7 +173,7 @@ pnad_rendimento_agregado_setor$rendimento_medio_real <- round(pnad_rendimento_ag
 # agregando as todas as bases
 
 pnad_rendimento_agregado_setor_total <- rbindlist(list(pnad_rendimento_agregado_setor,
-                                                       pnad_rendimento_agregado_total), use.names = F)
+                                                       pnad_rendimento_medio_total), use.names = F)
 
 
 # ---- exportando a base no R ---- 
