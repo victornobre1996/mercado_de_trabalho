@@ -70,6 +70,14 @@ pnad_ocupacao_agregado <-rbindlist(list(pnad_ocupacao_1,
                                         pnad_ocupacao_7,
                                         pnad_ocupacao_8), use.names=FALSE)
 
+
+pnad_ocupacao_agregado$Numero_de_Ocupados <- pnad_ocupacao_agregado$`summary(na.omit(p$variables$VD4009))`
+pnad_ocupacao_agregado$Tipo_de_ocupacao <-pnad_ocupacao_agregado$`row.names(a)`
+
+pnad_ocupacao_agregado <- pnad_ocupacao_agregado %>% select(trimestre, Tipo_de_ocupacao ,
+                                                                            Numero_de_Ocupados)
+
+
 ##Exportando Resultados
 write.csv(pnad_ocupacao_agregado, file = "pnad_ocupacao_agregado.csv")
 
