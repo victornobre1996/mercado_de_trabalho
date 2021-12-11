@@ -25,7 +25,6 @@ pnad_2020_4 <- get_pnadc(year = 2020, quarter = 4, vars = var_select)
 pnad_2021_1 <- get_pnadc(year = 2021, quarter = 1, vars = var_select)
 pnad_2021_2 <- get_pnadc(year = 2021, quarter = 2, vars = var_select)
 
-
 # Combinando categorias - para compatibilização com o PIB Trimestral
 
 a <- pnad_2019

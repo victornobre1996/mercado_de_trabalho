@@ -62,60 +62,7 @@ pnad_2021_2$variables$VD4010[pnad_2021_2$variables$VD4010 == "Educação, saúde
 pnad_2021_2$variables$VD4010[pnad_2021_2$variables$VD4010 == "Serviços domésticos"] <- as.factor(f)
 pnad_2021_2$variables$VD4010[pnad_2021_2$variables$VD4010 == aea] <- as.factor(f) 
 rm(a,e,f,aea,var_select)
-
-# na parte 1 e 2
-
-
-
-#Ocupação - Total da Economia # Parte 3
-
-mylist <- list(pnad_2019, pnad_2020_1, pnad_2020_2, pnad_2020_3,
-               pnad_2020_4, pnad_2021_1, pnad_2021_2)
-mylist_1 <-list("2019/4T", "2020/1T", "2020/2T", "2020/3T",
-                "2020/4T", "2021/1T", "2021/2T")
-
-for (h in seq_along(mylist_1)) {
-  for (i in seq_along(mylist)) {
-    p <- mylist[[i]]
-    a<-as.data.frame(summary(
-      na.omit(p$variables$VD4009))) %>% 
-      mutate(trimestre = mylist_1[[h]])
-    
-    a <- a %>% mutate(row.names(a)) 
-    
-    b <-as.data.frame(summary(na.omit(
-      interaction((p$variables$VD4009),
-                  (p$variables$VD4012),
-                  drop = T)))) %>% 
-      mutate(trimestre = mylist_1[[h]])
-    
-    b <- b %>% mutate(row.names(b))
-    
-    b<-(b[c("Conta-própria.Contribuinte",
-            "Conta-própria.Não contribuinte",
-            "Empregador.Contribuinte",
-            "Empregador.Não contribuinte"),])
-    
-    d <- rbindlist(list(a,b), use.names=FALSE)
-    assign(paste0("pnad_ocupacao_",h), d)
-    rm(a,b,d);
-  }
-}
-
-pnad_ocupacao_agregado <-rbindlist(list(pnad_ocupacao_1,
-                                        pnad_ocupacao_2,
-                                        pnad_ocupacao_3,
-                                        pnad_ocupacao_4,
-                                        pnad_ocupacao_5,
-                                        pnad_ocupacao_6,
-                                        pnad_ocupacao_7), use.names=FALSE)
-
-
-rownames(pnad_ocupacao_agregado) <- row.names()
-
-
-
-## RENDIMENTO MEDIO POR SETOR ## Parte 1
+## RENDIMENTO MEDIO POR SETOR ##
 
 pnad_rendimento_medio_setor_2019 <- svyby(formula =~VD4019, by = ~VD4010, design = pnad_2019, FUN = svymean, na.rm = TRUE )
 pnad_rendimento_medio_setor_2020_1 <- svyby(formula =~VD4019, by = ~VD4010, design = pnad_2020_1, FUN = svymean, na.rm = TRUE )
@@ -149,6 +96,11 @@ pnad_rendimento_agregado_setor <- rbindlist(list(pnad_rendimento_medio_setor_201
 
 pnad_rendimento_agregado_setor <- pnad_rendimento_agregado_setor[,-"se"]
 
+View(pnad_rendimento_agregado_setor)
+
+pnad_rendimento_agregado_setor <- pnad_rendimento_agregado_setor %>% 
+  select(trimestre, VD4010,VD4019)
+
 
 #---- transformando rowname para variavel e separando ----
 
@@ -180,7 +132,7 @@ pnad_rendimento_agregado_setor <- pnad_rendimento_agregado_setor %>%
 write.csv(pnad_rendimento_agregado_setor, file = "pnad_rendimento_agregado_setor.csv")
 
 
-## RENDIMENTO MEDIO POR SETOR E NIVEL DE INSTRUCAO ## Parte 2
+## RENDIMENTO MEDIO POR SETOR E NIVEL DE INSTRUCAO ##  
 
 pnad_rendimento_medio_2019 <- svyby(formula =~VD4019, by = ~interaction(VD3004,VD4010), design = pnad_2019, FUN = svymean, na.rm = TRUE )
 pnad_rendimento_medio_2020_1 <- svyby(formula =~VD4019, by = ~interaction(VD3004,VD4010), design = pnad_2020_1, FUN = svymean, na.rm = TRUE )
@@ -199,6 +151,7 @@ pnad_rendimento_medio_2020_3 <- pnad_rendimento_medio_2020_3 %>% mutate(trimestr
 pnad_rendimento_medio_2020_4 <- pnad_rendimento_medio_2020_4 %>% mutate(trimestre = "2020/4T")
 pnad_rendimento_medio_2021_1 <- pnad_rendimento_medio_2021_1 %>% mutate(trimestre = "2021/1T")
 pnad_rendimento_medio_2021_2 <- pnad_rendimento_medio_2021_2 %>% mutate(trimestre = "2021/2T")
+
 
 # agregando as bases de rendimento medio
 
