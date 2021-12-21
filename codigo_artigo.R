@@ -39,6 +39,38 @@ f <-a$variables$VD4010[30] # "Outros Serviços"
 g <-a$variables$VD4008[1] # "Empregado no Setor Privado"
 aea <-a$variables$VD4010[10] # "Alojamento e alimentação"
 
+<<<<<<< HEAD
+
+pnad_2019$variables$VD4010[pnad_2019$variables$VD4010 == "Educação, saúde humana e serviços sociais"] <- as.factor(e)
+pnad_2019$variables$VD4010[pnad_2019$variables$VD4010 == "Serviços domésticos"] <- as.factor(f)
+pnad_2019$variables$VD4010[pnad_2019$variables$VD4010 == aea] <- as.factor(f) 
+
+pnad_2020_1$variables$VD4010[pnad_2020_1$variables$VD4010 == "Educação, saúde humana e serviços sociais"] <- as.factor(e)
+pnad_2020_1$variables$VD4010[pnad_2020_1$variables$VD4010 == "Serviços domésticos"] <- as.factor(f)
+pnad_2020_1$variables$VD4010[pnad_2020_1$variables$VD4010 == aea] <- as.factor(f) 
+
+pnad_2020_2$variables$VD4010[pnad_2020_2$variables$VD4010 == "Educação, saúde humana e serviços sociais"] <- as.factor(e)
+pnad_2020_2$variables$VD4010[pnad_2020_2$variables$VD4010 == "Serviços domésticos"] <- as.factor(f)
+pnad_2020_2$variables$VD4010[pnad_2020_2$variables$VD4010 == aea] <- as.factor(f) 
+
+pnad_2020_3$variables$VD4010[pnad_2020_3$variables$VD4010 == "Educação, saúde humana e serviços sociais"] <- as.factor(e)
+pnad_2020_3$variables$VD4010[pnad_2020_3$variables$VD4010 == "Serviços domésticos"] <- as.factor(f)
+pnad_2020_3$variables$VD4010[pnad_2020_3$variables$VD4010 == aea] <- as.factor(f) 
+
+pnad_2020_4$variables$VD4010[pnad_2020_4$variables$VD4010 == "Educação, saúde humana e serviços sociais"] <- as.factor(e)
+pnad_2020_4$variables$VD4010[pnad_2020_4$variables$VD4010 == "Serviços domésticos"] <- as.factor(f)
+pnad_2020_4$variables$VD4010[pnad_2020_4$variables$VD4010 == aea] <- as.factor(f)
+
+pnad_2021_1$variables$VD4010[pnad_2021_1$variables$VD4010 == "Educação, saúde humana e serviços sociais"] <- as.factor(e)
+pnad_2021_1$variables$VD4010[pnad_2021_1$variables$VD4010 == "Serviços domésticos"] <- as.factor(f)
+pnad_2021_1$variables$VD4010[pnad_2021_1$variables$VD4010 == aea] <- as.factor(f) 
+
+pnad_2021_2$variables$VD4010[pnad_2021_2$variables$VD4010 == "Educação, saúde humana e serviços sociais"] <- as.factor(e)
+pnad_2021_2$variables$VD4010[pnad_2021_2$variables$VD4010 == "Serviços domésticos"] <- as.factor(f)
+pnad_2021_2$variables$VD4010[pnad_2021_2$variables$VD4010 == aea] <- as.factor(f) 
+rm(a,e,f,aea,var_select)
+## RENDIMENTO MEDIO POR SETOR ##
+=======
 mylist <- list(pnad_2019, pnad_2020_1, pnad_2020_2, pnad_2020_3,
                pnad_2020_4, pnad_2020_1, pnad_2021_2)
 mylist_1 <- list("2019","2020_1", "2020_2",
@@ -117,6 +149,7 @@ rownames(pnad_ocupacao_agregado) <- row.names()
 
 
 ## RENDIMENTO MEDIO POR SETOR ## Parte 1
+>>>>>>> 27212e9cc30431a2bf78f045f2e7ffe0fb8b31cd
 
 pnad_rendimento_medio_setor_2019 <- svyby(formula =~VD4019, by = ~VD4010, design = pnad_2019, FUN = svymean, na.rm = TRUE )
 pnad_rendimento_medio_setor_2020_1 <- svyby(formula =~VD4019, by = ~VD4010, design = pnad_2020_1, FUN = svymean, na.rm = TRUE )
@@ -150,6 +183,11 @@ pnad_rendimento_agregado_setor <- rbindlist(list(pnad_rendimento_medio_setor_201
 
 pnad_rendimento_agregado_setor <- pnad_rendimento_agregado_setor[,-"se"]
 
+View(pnad_rendimento_agregado_setor)
+
+pnad_rendimento_agregado_setor <- pnad_rendimento_agregado_setor %>% 
+  select(trimestre, VD4010,VD4019)
+
 
 #---- transformando rowname para variavel e separando ----
 
@@ -181,7 +219,7 @@ pnad_rendimento_agregado_setor <- pnad_rendimento_agregado_setor %>%
 write.csv(pnad_rendimento_agregado_setor, file = "pnad_rendimento_agregado_setor.csv")
 
 
-## RENDIMENTO MEDIO POR SETOR E NIVEL DE INSTRUCAO ## Parte 2
+## RENDIMENTO MEDIO POR SETOR E NIVEL DE INSTRUCAO ##  
 
 pnad_rendimento_medio_2019 <- svyby(formula =~VD4019, by = ~interaction(VD3004,VD4010), design = pnad_2019, FUN = svymean, na.rm = TRUE )
 pnad_rendimento_medio_2020_1 <- svyby(formula =~VD4019, by = ~interaction(VD3004,VD4010), design = pnad_2020_1, FUN = svymean, na.rm = TRUE )
@@ -200,6 +238,7 @@ pnad_rendimento_medio_2020_3 <- pnad_rendimento_medio_2020_3 %>% mutate(trimestr
 pnad_rendimento_medio_2020_4 <- pnad_rendimento_medio_2020_4 %>% mutate(trimestre = "2020/4T")
 pnad_rendimento_medio_2021_1 <- pnad_rendimento_medio_2021_1 %>% mutate(trimestre = "2021/1T")
 pnad_rendimento_medio_2021_2 <- pnad_rendimento_medio_2021_2 %>% mutate(trimestre = "2021/2T")
+
 
 # agregando as bases de rendimento medio
 
