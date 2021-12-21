@@ -40,7 +40,7 @@ for (i in seq_along(mylist)) {
   a<-as.data.frame(summary(
     na.omit(p$variables$VD4009))) %>% 
     mutate(trimestre = mylist_1[[i]])
-  
+  a <- a %>% select(-c("Empregador", "Conta-própria"))
   a <- a %>% mutate(row.names(a)) 
   
   b <-as.data.frame(summary(na.omit(
