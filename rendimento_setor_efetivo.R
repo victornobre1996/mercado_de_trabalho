@@ -179,3 +179,6 @@ pnad_rendimento_agregado_setor_total <- rbindlist(list(pnad_rendimento_agregado_
 
 # ---- exportando a base no R ---- 
 write.csv(pnad_rendimento_agregado_setor_total, file = "pnad_rendimento_agregado_setor_efetivo.csv")
+
+
+
