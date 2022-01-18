@@ -20,7 +20,7 @@ dados <- data.frame(setores = c("comercio",
                            "0,0006"))
 
 
-# alterando 
+# plotando gráfico de correlacao 
 
 dados %>% 
   ggplot(aes(x=produtividade, y=OC)) +
