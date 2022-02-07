@@ -52,10 +52,10 @@ for (i in seq_along(my_list)) {
 
 }
 
+
+
 # agregando as linhas de acordo com as colunas 
 
-
-  
 pnad_formais_agregado <- rbind(`pnad_formais_2019/4T`,
                                    `pnad_formais_2020/1T`,
                                    `pnad_formais_2020/2T`,
@@ -78,18 +78,39 @@ rm(`pnad_formais_2019/4T`,
          `pnad_formais_2021/3T`)
 
 
-
-View(pnad_formais_agregado)
-
 # fazendo manipulacoes
 
 pnad_formais_agregado_1 <- pnad_formais_agregado %>% 
-  rename(total_ocupados = `summary(na.omit(interaction(droplevels(p$variables$VD4010), droplevels(p$variables$VD4009), droplevels(p$variables$VD4012), drop = T)))`) %>% 
+  rename(total_ocupados = `summary(na.omit(interaction(droplevels(p$variables$VD4010), 
+                                                       droplevels(p$variables$VD4009),
+                                                       droplevels(p$variables$VD4012), drop = T)))`) %>% 
   mutate(tipo_formal = case_when(contribuinte == "Não contribuinte" ~ "informal",
                                  contribuinte == "Contribuinte" ~ "formal",
-                             TRUE ~ contribuinte)) %>% 
+                             TRUE ~ contribuinte)) %>%
   select(trimestre,setor,ocupacao, contribuinte, tipo_formal, total_ocupados) %>% 
-  na.omit(pnad_formais_agregado_1)
+  na.omit(pnad_formais_agregado_1) 
+
+
+
+rm(pnad_formais_2)
+
+pnad_formais_2 <- pnad_formais_agregado_1 %>% 
+  mutate(setor = case_when(setor == "Educação, saúde humana e serviços sociais" ~ "Administração pública, defesa e seguridade social",
+                           TRUE ~ setor)) %>% 
+  group_by(setor) %>% 
+  summarise(total_ocupados = sum(total_ocupados))
+
+pnad_formais_2
+
+
+
+
+
+
+
+
+
+
 
 write.csv(pnad_formais_agregado_1, file = "pnad_formais.csv")
   
