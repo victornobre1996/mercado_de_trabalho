@@ -11,9 +11,12 @@ library(data.table)
 
 # baixando as bases
 
+
 var_select <- c("VD4002", "V2009", "VD4019", "VD3004", "VD4010", 
                 "VD4008", "VD4009", "VD4011" ,"VD4012","V4032")
 
+
+# baixando os datasets do IBGE
 
 pnad_2019 <- get_pnadc(year = 2019, quarter = 4, vars = var_select)
 pnad_2020_1 <- get_pnadc(year = 2020, quarter = 1, vars = var_select)
@@ -54,7 +57,7 @@ for (i in seq_along(my_list)) {
 
 
 
-# agregando as linhas de acordo com as colunas 
+# agregando as linhas de formais 
 
 pnad_formais_agregado <- rbind(`pnad_formais_2019/4T`,
                                    `pnad_formais_2020/1T`,
@@ -66,7 +69,7 @@ pnad_formais_agregado <- rbind(`pnad_formais_2019/4T`,
                                    `pnad_formais_2021/3T`)
 
 
-# removendo as demais linhas
+# a partir do dataset agregado, excluir demais datasets
       
 rm(`pnad_formais_2019/4T`,
          `pnad_formais_2020/1T`,
@@ -78,44 +81,32 @@ rm(`pnad_formais_2019/4T`,
          `pnad_formais_2021/3T`)
 
 
-# fazendo manipulacoes
+# adicionando a coluna de contribuintes e nao contribuintes bem como formais e informais
 
 pnad_formais_agregado_1 <- pnad_formais_agregado %>% 
-  rename(total_ocupados = `summary(na.omit(interaction(droplevels(p$variables$VD4010), 
-                                                       droplevels(p$variables$VD4009),
-                                                       droplevels(p$variables$VD4012), drop = T)))`) %>% 
-  mutate(tipo_formal = case_when(contribuinte == "Não contribuinte" ~ "informal",
+    mutate(tipo_formal = case_when(contribuinte == "Não contribuinte" ~ "informal",
                                  contribuinte == "Contribuinte" ~ "formal",
                              TRUE ~ contribuinte)) %>%
-  select(trimestre,setor,ocupacao, contribuinte, tipo_formal, total_ocupados) %>% 
-  na.omit(pnad_formais_agregado_1) 
+  rename(total_ocupados = `summary(na.omit(interaction(droplevels(p$variables$VD4010), droplevels(p$variables$VD4009), droplevels(p$variables$VD4012), drop = T)))`) %>% 
+na.omit(pnad_formais_agregado_1) %>% 
+  select(trimestre,setor, tipo_formal,total_ocupados)
+
+
+### somando as categorias
+
+teste <- pnad_formais_agregado_1 %>% 
+  mutate(setor = case_when(setor == "Educação, saúde humana e serviços sociais" ~ "Administração pública, defesa e seguridade social ",
+                           setor == "Alojamento e alimentação" ~ "Outros Serviços",
+                           setor == "Serviços domésticos" ~ "Outros Serviços",
+                           TRUE ~ setor))
 
 
 
-rm(pnad_formais_2)
-
-pnad_formais_2 <- pnad_formais_agregado_1 %>% 
-  mutate(setor = case_when(setor == "Educação, saúde humana e serviços sociais" ~ "Administração pública, defesa e seguridade social",
-                           TRUE ~ setor)) %>% 
-  group_by(setor) %>% 
-  summarise(total_ocupados = sum(total_ocupados))
-
-pnad_formais_2
-
-
-
-
-
-
-
-
-
-
+# exportando planilha
 
 write.csv(pnad_formais_agregado_1, file = "pnad_formais.csv")
   
-
-
+ 
 
 
 
