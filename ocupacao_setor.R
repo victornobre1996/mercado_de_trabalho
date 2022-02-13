@@ -50,6 +50,7 @@ for (i in seq_along(mylist)) {
       col = "row.names(a)", 
       into = c("setor", "ocupacao"),
       sep = "\\.")
+ 
   
   a <- a[a$ocupacao != "Empregador" & a$ocupacao != "Conta-própria" ,]
   b <-as.data.frame(summary(na.omit(
