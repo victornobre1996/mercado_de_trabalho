@@ -1,0 +1,145 @@
+"","trimestre","posicao_ocupacao","rendimento_efetivo"
+"1","2019/4T","Empregado no setor privado com carteira de trabalho assinada",2732.47
+"2","2019/4T","Empregado no setor privado sem carteira de trabalho assinada",1650.21
+"3","2019/4T","Trabalhador doméstico com carteira de trabalho assinada",1551.73
+"4","2019/4T","Trabalhador doméstico sem carteira de trabalho assinada",859.98
+"5","2019/4T","Empregado no setor público com carteira de trabalho assinada",5135.24
+"6","2019/4T","Empregado no setor público sem carteira de trabalho assinada",2454.25
+"7","2019/4T","Militar e servidor estatutário",5356.61
+"8","2019/4T","Empregador",6966.82
+"9","2019/4T","Conta-própria",1906.72
+"10","2019/4T","Trabalhador familiar auxiliar",1543.21
+"11","2019/4T","FALSE",2532.08
+"12","2019/4T","TRUE",7667.13
+"13","2019/4T","FALSE",2681.79
+"14","2019/4T","TRUE",5062.19
+"15","2019/4T","FALSE",2681.21
+"16","2019/4T","TRUE",3072.05
+"17","2019/4T","FALSE",3010.83
+"18","2019/4T","TRUE",1403.1
+"19","2020/1T","Empregado no setor privado com carteira de trabalho assinada",3028.14
+"20","2020/1T","Empregado no setor privado sem carteira de trabalho assinada",1715.67
+"21","2020/1T","Trabalhador doméstico com carteira de trabalho assinada",1717.54
+"22","2020/1T","Trabalhador doméstico sem carteira de trabalho assinada",860.73
+"23","2020/1T","Empregado no setor público com carteira de trabalho assinada",5329.24
+"24","2020/1T","Empregado no setor público sem carteira de trabalho assinada",2553.11
+"25","2020/1T","Militar e servidor estatutário",5816.74
+"26","2020/1T","Empregador",6793.44
+"27","2020/1T","Conta-própria",1905.21
+"28","2020/1T","Trabalhador familiar auxiliar",1294.25
+"29","2020/1T","FALSE",2725.31
+"30","2020/1T","TRUE",7522.61
+"31","2020/1T","FALSE",2863.29
+"32","2020/1T","TRUE",4956.91
+"33","2020/1T","FALSE",2882.64
+"34","2020/1T","TRUE",2999.69
+"35","2020/1T","FALSE",3227.76
+"36","2020/1T","TRUE",1424.37
+"37","2020/2T","Empregado no setor privado com carteira de trabalho assinada",2572.85
+"38","2020/2T","Empregado no setor privado sem carteira de trabalho assinada",1595.09
+"39","2020/2T","Trabalhador doméstico com carteira de trabalho assinada",1427.95
+"40","2020/2T","Trabalhador doméstico sem carteira de trabalho assinada",715.24
+"41","2020/2T","Empregado no setor público com carteira de trabalho assinada",4692.97
+"42","2020/2T","Empregado no setor público sem carteira de trabalho assinada",2341.13
+"43","2020/2T","Militar e servidor estatutário",5046.73
+"44","2020/2T","Empregador",5918.97
+"45","2020/2T","Conta-própria",1550.1
+"46","2020/2T","Trabalhador familiar auxiliar",880.04
+"47","2020/2T","FALSE",2410.4
+"48","2020/2T","TRUE",6419.66
+"49","2020/2T","FALSE",2527.27
+"50","2020/2T","TRUE",4539.4
+"51","2020/2T","FALSE",2568.61
+"52","2020/2T","TRUE",2394.82
+"53","2020/2T","FALSE",2861.01
+"54","2020/2T","TRUE",1131.74
+"55","2020/3T","Empregado no setor privado com carteira de trabalho assinada",2570.52
+"56","2020/3T","Empregado no setor privado sem carteira de trabalho assinada",1688.91
+"57","2020/3T","Trabalhador doméstico com carteira de trabalho assinada",1411.55
+"58","2020/3T","Trabalhador doméstico sem carteira de trabalho assinada",765.33
+"59","2020/3T","Empregado no setor público com carteira de trabalho assinada",4652.84
+"60","2020/3T","Empregado no setor público sem carteira de trabalho assinada",2392.52
+"61","2020/3T","Militar e servidor estatutário",5325.76
+"62","2020/3T","Empregador",6822.89
+"63","2020/3T","Conta-própria",1684.07
+"64","2020/3T","Trabalhador familiar auxiliar",1402.25
+"65","2020/3T","FALSE",2484.41
+"66","2020/3T","TRUE",7382.6
+"67","2020/3T","FALSE",2621.56
+"68","2020/3T","TRUE",5303.85
+"69","2020/3T","FALSE",2659.44
+"70","2020/3T","TRUE",2622.87
+"71","2020/3T","FALSE",2975.05
+"72","2020/3T","TRUE",1233.15
+"73","2020/3T","Empregado no setor privado com carteira de trabalho assinada",2570.52
+"74","2020/3T","Empregado no setor privado sem carteira de trabalho assinada",1688.91
+"75","2020/3T","Trabalhador doméstico com carteira de trabalho assinada",1411.55
+"76","2020/3T","Trabalhador doméstico sem carteira de trabalho assinada",765.33
+"77","2020/3T","Empregado no setor público com carteira de trabalho assinada",4652.84
+"78","2020/3T","Empregado no setor público sem carteira de trabalho assinada",2392.52
+"79","2020/3T","Militar e servidor estatutário",5325.76
+"80","2020/3T","Empregador",6822.89
+"81","2020/3T","Conta-própria",1684.07
+"82","2020/3T","Trabalhador familiar auxiliar",1402.25
+"83","2020/3T","FALSE",2484.41
+"84","2020/3T","TRUE",7382.6
+"85","2020/3T","FALSE",2621.56
+"86","2020/3T","TRUE",5303.85
+"87","2020/3T","FALSE",2659.44
+"88","2020/3T","TRUE",2622.87
+"89","2020/3T","FALSE",2975.05
+"90","2020/3T","TRUE",1233.15
+"91","2020/4T","Empregado no setor privado com carteira de trabalho assinada",2686.31
+"92","2020/4T","Empregado no setor privado sem carteira de trabalho assinada",1686.63
+"93","2020/4T","Trabalhador doméstico com carteira de trabalho assinada",1454.04
+"94","2020/4T","Trabalhador doméstico sem carteira de trabalho assinada",792.61
+"95","2020/4T","Empregado no setor público com carteira de trabalho assinada",4908.42
+"96","2020/4T","Empregado no setor público sem carteira de trabalho assinada",2447.43
+"97","2020/4T","Militar e servidor estatutário",5285.42
+"98","2020/4T","Empregador",6445.48
+"99","2020/4T","Conta-própria",1779.69
+"100","2020/4T","Trabalhador familiar auxiliar",509.64
+"101","2020/4T","FALSE",2532.6
+"102","2020/4T","TRUE",7080.26
+"103","2020/4T","FALSE",2656.87
+"104","2020/4T","TRUE",4819.61
+"105","2020/4T","FALSE",2676.75
+"106","2020/4T","TRUE",2770.46
+"107","2020/4T","FALSE",3002.89
+"108","2020/4T","TRUE",1300.08
+"109","2021/1T","Empregado no setor privado com carteira de trabalho assinada",3028.14
+"110","2021/1T","Empregado no setor privado sem carteira de trabalho assinada",1715.67
+"111","2021/1T","Trabalhador doméstico com carteira de trabalho assinada",1717.54
+"112","2021/1T","Trabalhador doméstico sem carteira de trabalho assinada",860.73
+"113","2021/1T","Empregado no setor público com carteira de trabalho assinada",5329.24
+"114","2021/1T","Empregado no setor público sem carteira de trabalho assinada",2553.11
+"115","2021/1T","Militar e servidor estatutário",5816.74
+"116","2021/1T","Empregador",6793.44
+"117","2021/1T","Conta-própria",1905.21
+"118","2021/1T","Trabalhador familiar auxiliar",1294.25
+"119","2021/1T","FALSE",2725.31
+"120","2021/1T","TRUE",7522.61
+"121","2021/1T","FALSE",2863.29
+"122","2021/1T","TRUE",4956.91
+"123","2021/1T","FALSE",2882.64
+"124","2021/1T","TRUE",2999.69
+"125","2021/1T","FALSE",3227.76
+"126","2021/1T","TRUE",1424.37
+"127","2021/2T","Empregado no setor privado com carteira de trabalho assinada",2569.27
+"128","2021/2T","Empregado no setor privado sem carteira de trabalho assinada",1651.05
+"129","2021/2T","Trabalhador doméstico com carteira de trabalho assinada",1402.45
+"130","2021/2T","Trabalhador doméstico sem carteira de trabalho assinada",792.83
+"131","2021/2T","Empregado no setor público com carteira de trabalho assinada",4467.57
+"132","2021/2T","Empregado no setor público sem carteira de trabalho assinada",2600.54
+"133","2021/2T","Militar e servidor estatutário",4967.73
+"134","2021/2T","Empregador",6240.08
+"135","2021/2T","Conta-própria",1814.21
+"136","2021/2T","Trabalhador familiar auxiliar",712.1
+"137","2021/2T","FALSE",2437.47
+"138","2021/2T","TRUE",6737.24
+"139","2021/2T","FALSE",2545.86
+"140","2021/2T","TRUE",4937.33
+"141","2021/2T","FALSE",2542.09
+"142","2021/2T","TRUE",2901.72
+"143","2021/2T","FALSE",2887.55
+"144","2021/2T","TRUE",1310.99
