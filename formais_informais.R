@@ -1,7 +1,7 @@
 rm(list = ls())
 
 
-# Script utilizado para puxar setores por formal e informal 
+# Script utilizado para puxar setores e ocupados por formal e informal 
 
 
 library(tidyverse)
