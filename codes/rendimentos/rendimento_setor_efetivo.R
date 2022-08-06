@@ -127,13 +127,13 @@ pnad_rendimento_medio_total$rendimento_medio_real <- round(pnad_rendimento_medio
 
 ## RENDIMENTO MEDIO POR SETOR ##
 
-pnad_rendimento_medio_setor_2019 <- svyby(formula =~(VD4020_real =VD4020), by = ~VD4010, design = pnad_2019, FUN = svymean, na.rm = TRUE )
-pnad_rendimento_medio_setor_2020_1 <- svyby(formula =~(VD4020_real =VD4020), by = ~VD4010, design = pnad_2020_1, FUN = svymean, na.rm = TRUE )
-pnad_rendimento_medio_setor_2020_2 <- svyby(formula =~(VD4020_real =VD4020), by = ~VD4010, design = pnad_2020_2, FUN = svymean, na.rm = TRUE )
-pnad_rendimento_medio_setor_2020_3 <- svyby(formula =~(VD4020_real =VD4020), by = ~VD4010, design = pnad_2020_3, FUN = svymean, na.rm = TRUE )
-pnad_rendimento_medio_setor_2020_4 <- svyby(formula =~(VD4020_real =VD4020), by = ~VD4010, design = pnad_2020_4, FUN = svymean, na.rm = TRUE )
-pnad_rendimento_medio_setor_2021_1 <- svyby(formula =~(VD4020_real =VD4020), by = ~VD4010, design = pnad_2021_1, FUN = svymean, na.rm = TRUE )
-pnad_rendimento_medio_setor_2021_2 <- svyby(formula =~(VD4020_real =VD4020), by = ~VD4010, design = pnad_2021_2, FUN = svymean, na.rm = TRUE )
+pnad_rendimento_medio_setor_2019 <- svyby(formula =~(VD4020_real =VD4020*Efetivo), by = ~VD4010, design = pnad_2019, FUN = svymean, na.rm = TRUE )
+pnad_rendimento_medio_setor_2020_1 <- svyby(formula =~(VD4020_real =VD4020*Efetivo), by = ~VD4010, design = pnad_2020_1, FUN = svymean, na.rm = TRUE )
+pnad_rendimento_medio_setor_2020_2 <- svyby(formula =~(VD4020_real =VD4020*Efetivo), by = ~VD4010, design = pnad_2020_2, FUN = svymean, na.rm = TRUE )
+pnad_rendimento_medio_setor_2020_3 <- svyby(formula =~(VD4020_real =VD4020*Efetivo), by = ~VD4010, design = pnad_2020_3, FUN = svymean, na.rm = TRUE )
+pnad_rendimento_medio_setor_2020_4 <- svyby(formula =~(VD4020_real =VD4020*Efetivo), by = ~VD4010, design = pnad_2020_4, FUN = svymean, na.rm = TRUE )
+pnad_rendimento_medio_setor_2021_1 <- svyby(formula =~(VD4020_real =VD4020*Efetivo), by = ~VD4010, design = pnad_2021_1, FUN = svymean, na.rm = TRUE )
+pnad_rendimento_medio_setor_2021_2 <- svyby(formula =~(VD4020_real =VD4020*Efetivo), by = ~VD4010, design = pnad_2021_2, FUN = svymean, na.rm = TRUE )
 pnad_rendimento_medio_setor_2021_3 <- svyby(formula =~(VD4020_real =VD4020), by = ~VD4010, design = pnad_2021_3, FUN = svymean, na.rm = TRUE )
 
 # adicionar os trimestres
@@ -179,6 +179,3 @@ pnad_rendimento_agregado_setor_total <- rbindlist(list(pnad_rendimento_agregado_
 
 # ---- exportando a base no R ---- 
 write.csv(pnad_rendimento_agregado_setor_total, file = "pnad_rendimento_agregado_setor_efetivo.csv")
-
-
-

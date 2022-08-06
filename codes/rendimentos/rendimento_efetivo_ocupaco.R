@@ -34,7 +34,7 @@ mylist_1 <-list("2019/4T", "2020/1T", "2020/2T", "2020/3T",
 
 for (i in seq_along(mylist)) {
   p <- mylist[[i]]
-  
+
   a <- svyby(formula =~(VD4017_real = VD4017*Efetivo), by = ~VD4009, 
              design = p, FUN = svymean, na.rm = TRUE )
     
@@ -54,11 +54,11 @@ for (i in seq_along(mylist)) {
                                                                    V4032=="Não"),
               design = p, FUN = svymean, na.rm = TRUE )
   
-              
   d <- rbindlist(list(a,a1,a2,a3,a4), use.names=FALSE) %>% 
     mutate(trimestre = mylist_1[[i]])
   
-  assign(paste0("pnad_rendimento_ocupados",i), d)            
+  assign(paste0("pnad_rendiento_ocupados_ok",i), d)            
+
   
 }
 
@@ -75,22 +75,14 @@ pnad_rendimento_agregado_ocupacao <- rbindlist(list(pnad_rendimento_ocupados1,
 
 # tratando os dados
 
-pnad_rendimento_agregado_ocupacao_1 <- pnad_rendimento_agregado_ocupacao %>% 
-  select(trimestre,VD4009,`VD4020_real = VD4020 * Efetivo`)
-
-
-# 
-
-pnad_rendimento_agregado_ocupacao_1 <-pnad_rendimento_agregado_ocupacao_1 %>% 
-  rename(posicao_ocupacao = VD4009,
-         rendimento_efetivo = `VD4020_real = VD4020 * Efetivo`)
-
 
 
 pnad_rendimento_agregado_ocupacao_1$rendimento_efetivo <- round(pnad_rendimento_agregado_ocupacao_1$rendimento_efetivo, digits = 2)
 
 
 write.csv(pnad_rendimento_agregado_ocupacao_1, file = "pnad_ocupacao.csv")
+
+
 
 
 
